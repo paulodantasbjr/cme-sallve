@@ -1,10 +1,11 @@
 import { useRouter } from 'next/router'
 import { useContext, useEffect } from 'react'
 import { GlobalContext } from '../store/GlobalStore'
+import { LayoutProps } from '../types/Layout'
 import { Navbar } from './Navbar'
 import { Sidebar } from './Sidebar'
 
-export const Layout = ({ children }) => {
+export const Layout = ({ children }: LayoutProps) => {
   const router = useRouter()
   const { state } = useContext(GlobalContext)
 
