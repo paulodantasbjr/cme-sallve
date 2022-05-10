@@ -46,7 +46,7 @@ export const Sidebar = () => {
             <Link href="/inventory">
               <a className="flex items-center rounded-lg p-2 text-base font-normal text-gray-900 hover:bg-lime-200 dark:text-white dark:hover:bg-gray-700">
                 <HiClipboardList className="h-6 w-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" />
-                <span className="ml-3">Inventario</span>
+                <span className="ml-3">Inventário</span>
               </a>
             </Link>
           </li>
@@ -55,7 +55,7 @@ export const Sidebar = () => {
               <Link href="/user">
                 <a className="flex items-center rounded-lg p-2 text-base font-normal text-gray-900 hover:bg-lime-200 dark:text-white dark:hover:bg-gray-700">
                   <HiUser className="h-6 w-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" />
-                  <span className="ml-3">Usuarios</span>
+                  <span className="ml-3">Usuários</span>
                 </a>
               </Link>
             </li>

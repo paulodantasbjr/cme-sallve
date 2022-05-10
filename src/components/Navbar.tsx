@@ -53,7 +53,7 @@ export const Navbar = () => {
                   className="text-xs font-bold uppercase tracking-wide text-gray-700"
                   htmlFor="numberSeries"
                 >
-                  Numero de serie
+                  Número de série
                 </label>
                 <input
                   className="w-full rounded border border-gray-200 bg-gray-50 p-2 leading-tight text-gray-700 focus:border-gray-500 focus:bg-white focus:outline-none"
