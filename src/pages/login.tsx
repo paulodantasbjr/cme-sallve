@@ -127,7 +127,7 @@ const Login: NextPage = () => {
               ENTRAR
             </button>
             <Link href="/register">
-              <a className="text-xs">
+              <a className="flex items-center justify-center gap-2 text-xs">
                 Não possui conta?
                 <span className="hover:text-fuchsia-400 hover:underline">
                   Registre-se
