@@ -17,7 +17,7 @@ class MyDocument extends Document {
     return (
       <Html>
         <Head>
-          <link rel="shortcut icon" href="favicon.ico" type="/favicon.webp" />
+          <link rel="shortcut icon" href="/favicon.webp" type="/favicon.webp" />
         </Head>
         <body>
           <Main />

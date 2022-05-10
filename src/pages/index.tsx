@@ -1,8 +1,18 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
+import { useRouter } from 'next/router'
+import { useContext, useEffect } from 'react'
+import { GlobalContext } from '../store/GlobalStore'
 
 const Home: NextPage = () => {
+  const router = useRouter()
+  const { state } = useContext(GlobalContext)
+
+  useEffect(() => {
+    if (!state.auth.token) router.push('/login')
+  }, [router, state.auth])
+
   return (
     <>
       <Head>
