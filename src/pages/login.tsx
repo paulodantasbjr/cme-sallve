@@ -6,7 +6,7 @@ import { useContext, useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import { postData } from '../services'
 import { GlobalContext } from '../store/GlobalStore'
-import Cookie from 'js-cookie'
+import Cookies from 'js-cookie'
 
 const Login: NextPage = () => {
   const initialState = {
@@ -38,7 +38,7 @@ const Login: NextPage = () => {
         autoClose: 1000,
         closeButton: true,
       })
-      Cookie.set('refreshToken', result.refreshToken, {
+      Cookies.set('refreshToken', result.refreshToken, {
         path: 'api/auth/accessToken',
         expires: 7,
       })
