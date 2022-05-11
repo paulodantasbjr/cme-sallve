@@ -23,7 +23,7 @@ export default async function handler(
 
 const getEquipaments = async (res: NextApiResponse) => {
   try {
-    const equipaments = await Equipament.find().sort({ ns: 1 })
+    const equipaments = await Equipament.find().sort({ updatedAt: -1 })
     res.status(200).json({
       total: equipaments.length,
       equipaments,
