@@ -3,6 +3,5 @@ export interface UserProps {
   email: string
   password: string
   role: 'adm' | 'user'
-  root: boolean
   avatar: string
 }

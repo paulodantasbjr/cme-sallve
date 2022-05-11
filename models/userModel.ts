@@ -21,10 +21,6 @@ const userSchema = new Schema<UserProps>(
       type: String,
       default: 'user',
     },
-    root: {
-      type: Boolean,
-      default: false,
-    },
     avatar: {
       type: String,
       default:

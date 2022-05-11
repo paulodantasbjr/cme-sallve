@@ -4,7 +4,7 @@ import Head from 'next/head'
 import { IoMdArrowBack } from 'react-icons/io'
 import Link from 'next/link'
 import { useContext, useEffect, useState } from 'react'
-import { valid } from '../utils/Valid'
+import { validUser } from '../utils/Valid'
 import { toast } from 'react-toastify'
 import { postData } from '../services'
 import { useRouter } from 'next/router'
@@ -30,7 +30,7 @@ const Register: NextPage = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    const errMsg = valid(
+    const errMsg = validUser(
       userData.email,
       userData.password,
       userData.name,

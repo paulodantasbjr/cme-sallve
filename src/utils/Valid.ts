@@ -4,7 +4,7 @@ const validateEmail = (email: string) => {
   return verifyEmail.test(String(email).toLowerCase())
 }
 
-export const valid = (
+export const validUser = (
   email: string,
   password: string,
   name?: string,
@@ -18,4 +18,17 @@ export const valid = (
   if (password.length < 6) return 'A senha deve ter no mínimo 6 caracteres'
 
   if (password !== passwordConfirm) return 'As senhas não conferem'
+}
+
+export const validEquipament = (
+  ns: string,
+  type: string,
+  brand: string,
+  model: string,
+  status: string
+) => {
+  if (!ns || !type || !brand || !model || !status)
+    return 'Preencha todos os campos'
+
+  if (ns.length < 3) return 'O número de série deve ter no mínimo 3 caracteres'
 }

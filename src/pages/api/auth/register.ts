@@ -24,7 +24,6 @@ export default async function handler(
 const register = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const { name, email, password } = req.body
-    console.log('chegou')
 
     const user = await User.findOne({ email })
     if (user) return res.status(404).json({ error: 'email ja existe' })
