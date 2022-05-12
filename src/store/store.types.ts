@@ -13,9 +13,11 @@ export interface Action {
 
 export interface State {
   auth: AuthProps
+  equipaments: string
 }
 
 export interface GlobalStateProps {
+  equipaments: string
   auth: AuthProps
 }
 

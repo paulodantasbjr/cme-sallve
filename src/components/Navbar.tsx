@@ -25,7 +25,7 @@ export const Navbar = () => {
             className="ml-4 flex items-center justify-center gap-1 rounded-lg bg-fuchsia-400 p-2 text-sm font-normal uppercase text-white transition duration-75 hover:bg-fuchsia-600 dark:text-white dark:hover:bg-gray-700 "
           >
             <AiOutlinePlus className="text-white" />
-            novo equipamento
+            Novo equipamento
           </button>
         )}
         <div className="relative mr-4 flex flex-row-reverse items-center gap-2">

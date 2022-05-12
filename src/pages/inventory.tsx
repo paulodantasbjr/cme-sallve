@@ -1,11 +1,13 @@
 import type { GetServerSideProps, NextPage } from 'next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { useContext, useEffect } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { Layout } from '../components/Layout'
 import { getData } from '../services'
 import { GlobalContext } from '../store/GlobalStore'
 import { EquipamentProps } from '../types/Equipament'
+import { MdEdit, MdDeleteForever } from 'react-icons/md'
+import { ModalDelete } from '../components/ModalDelete'
 
 interface InventoryProps {
   equipaments: EquipamentProps[]
@@ -14,13 +16,27 @@ interface InventoryProps {
 
 const Inventory: NextPage<InventoryProps> = ({
   equipaments,
+  total,
 }: InventoryProps) => {
+  const [isOpen, setIsOpen] = useState(false)
   const router = useRouter()
-  const { state } = useContext(GlobalContext)
+  const { state, dispatch } = useContext(GlobalContext)
 
   useEffect(() => {
     if (!state.auth.token) router.push('/login')
   }, [router, state.auth])
+
+  const handleClose = () => {
+    setIsOpen(false)
+  }
+
+  const handleDelete = (id: string) => {
+    dispatch({
+      type: 'DELETE_EQUIPAMENT',
+      payload: id,
+    })
+    setIsOpen(!isOpen)
+  }
 
   return (
     <>
@@ -28,66 +44,73 @@ const Inventory: NextPage<InventoryProps> = ({
         <title>Inventorio</title>
       </Head>
       <Layout>
-        <div className="relative flex-grow overflow-x-auto p-4 shadow-md sm:rounded-lg">
-          <table className="w-full text-left text-sm text-gray-500 dark:text-gray-400">
-            <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
-              <tr>
-                <th scope="col" className="px-6 py-3">
-                  Número de série
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  tipo
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  modelo
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  marca
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  status
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  obs
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  <span className="sr-only">Edit</span>
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {equipaments.map((equipament) => (
-                <tr
-                  key={equipament.ns}
-                  className="border-b bg-white hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-600"
-                >
-                  <th
-                    scope="row"
-                    className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white"
-                  >
-                    {equipament.ns}
+        {total > 0 ? (
+          <div className="relative flex-grow overflow-x-auto p-4 shadow-md sm:rounded-lg">
+            <table className="w-full text-left text-sm text-gray-500 dark:text-gray-400">
+              <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                  <th scope="col" className="px-6 py-3">
+                    Número de série
                   </th>
-                  <td className="px-6 py-4">{equipament.type}</td>
-                  <td className="px-6 py-4">{equipament.model}</td>
-                  <td className="px-6 py-4">{equipament.brand}</td>
-                  <td className="px-6 py-4">{equipament.status}</td>
-                  <td className="px-6 py-4">
-                    {equipament.obs ? equipament.obs : <span>---</span>}
-                  </td>
-                  <td className="px-6 py-4 text-right">
-                    <a
-                      href="#"
-                      className="font-medium text-blue-600 hover:underline dark:text-blue-500"
-                    >
-                      Edit
-                    </a>
-                  </td>
+                  <th scope="col" className="px-6 py-3">
+                    tipo
+                  </th>
+                  <th scope="col" className="px-6 py-3">
+                    modelo
+                  </th>
+                  <th scope="col" className="px-6 py-3">
+                    marca
+                  </th>
+                  <th scope="col" className="px-6 py-3">
+                    status
+                  </th>
+                  <th scope="col" className="px-6 py-3">
+                    obs
+                  </th>
+                  <th scope="col" className="px-6 py-3">
+                    <span className="sr-only">Edit</span>
+                  </th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody>
+                {equipaments.map((equipament) => (
+                  <tr
+                    key={equipament.ns}
+                    className="border-b bg-white hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-600"
+                  >
+                    <th
+                      scope="row"
+                      className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white"
+                    >
+                      {equipament.ns}
+                    </th>
+                    <td className="px-6 py-4">{equipament.type}</td>
+                    <td className="px-6 py-4">{equipament.model}</td>
+                    <td className="px-6 py-4">{equipament.brand}</td>
+                    <td className="px-6 py-4">{equipament.status}</td>
+                    <td className="px-6 py-4">
+                      {equipament.obs ? equipament.obs : <span>---</span>}
+                    </td>
+                    <td className="flex items-center justify-center gap-1 px-6 py-4 ">
+                      <MdEdit className="h-5 w-5 cursor-pointer  text-neutral-500 hover:text-neutral-800" />
+                      <div className="h-5 w-0.5 bg-gray-200" />
+                      <MdDeleteForever
+                        onClick={() => handleDelete(equipament._id)}
+                        className="h-5 w-5 cursor-pointer text-rose-500 hover:text-rose-800"
+                      />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        ) : (
+          <div className="flex flex-grow items-center justify-center">
+            <h1 className="text-4xl">Não há equipamentos cadastrados</h1>
+          </div>
+        )}
       </Layout>
+      {isOpen && <ModalDelete handleClose={handleClose} />}
     </>
   )
 }

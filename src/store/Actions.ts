@@ -1,3 +1,4 @@
 export const ACTIONS = {
   AUTH: 'AUTH',
+  DELETE_EQUIPAMENT: 'DELETE_EQUIPAMENT',
 }

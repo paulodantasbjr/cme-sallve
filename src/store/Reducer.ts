@@ -8,6 +8,11 @@ export const reducers = (state: State, action: Action) => {
         ...state,
         auth: action.payload,
       }
+    case ACTIONS.DELETE_EQUIPAMENT:
+      return {
+        ...state,
+        equipaments: action.payload,
+      }
     default:
       return state
   }

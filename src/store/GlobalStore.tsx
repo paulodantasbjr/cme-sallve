@@ -10,6 +10,7 @@ export const GlobalContext = createContext({} as GlobalContextProps)
 export const DataProvider = ({ children }: DataProviderProps) => {
   const initialState = {
     auth: {},
+    equipaments: '',
   }
   const [state, dispatch] = useReducer(reducers, initialState)
 
