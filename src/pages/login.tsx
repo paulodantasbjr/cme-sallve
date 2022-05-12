@@ -72,7 +72,7 @@ const Login: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Login</title>
+        <title>CME - Login</title>
       </Head>
       <div className="flex h-screen w-screen items-center justify-center bg-lime-200">
         <form

@@ -16,7 +16,7 @@ const User: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Usuarios</title>
+        <title>CME - Usuários</title>
       </Head>
       <Layout>
         <div className="flex h-full flex-col items-center justify-center">

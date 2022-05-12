@@ -53,7 +53,7 @@ const Inventory: NextPage<InventoryProps> = ({
   return (
     <>
       <Head>
-        <title>Inventorio</title>
+        <title>CME - Inventário</title>
       </Head>
       <Layout>
         {total > 0 ? (

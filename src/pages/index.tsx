@@ -16,7 +16,7 @@ const Home: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Home</title>
+        <title>CME - Home</title>
       </Head>
       <Layout>
         <div className="flex h-full flex-col items-center justify-center">

@@ -68,7 +68,7 @@ const Register: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Register</title>
+        <title>CME - Registro</title>
       </Head>
       <div className="flex h-screen w-screen items-center justify-center bg-lime-200">
         <form
