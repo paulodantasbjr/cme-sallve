@@ -8,6 +8,7 @@ import { GlobalContext } from '../store/GlobalStore'
 import { EquipamentProps } from '../types/Equipament'
 import { MdEdit, MdDeleteForever } from 'react-icons/md'
 import { ModalDelete } from '../components/ModalDelete'
+import { Modal } from '../components/Modal'
 
 interface InventoryProps {
   equipaments: EquipamentProps[]
@@ -19,6 +20,7 @@ const Inventory: NextPage<InventoryProps> = ({
   total,
 }: InventoryProps) => {
   const [isOpen, setIsOpen] = useState(false)
+  const [isOpenEdit, setIsOpenEdit] = useState(false)
   const router = useRouter()
   const { state, dispatch } = useContext(GlobalContext)
 
@@ -27,7 +29,17 @@ const Inventory: NextPage<InventoryProps> = ({
   }, [router, state.auth])
 
   const handleClose = () => {
+    dispatch({ type: 'EDIT_EQUIPAMENT', payload: {} })
     setIsOpen(false)
+    setIsOpenEdit(false)
+  }
+
+  const handleEdit = (equipament: EquipamentProps) => {
+    dispatch({
+      type: 'EDIT_EQUIPAMENT',
+      payload: equipament,
+    })
+    setIsOpenEdit(!isOpen)
   }
 
   const handleDelete = (id: string) => {
@@ -67,9 +79,11 @@ const Inventory: NextPage<InventoryProps> = ({
                   <th scope="col" className="px-6 py-3">
                     obs
                   </th>
-                  <th scope="col" className="px-6 py-3">
-                    <span className="sr-only">Edit</span>
-                  </th>
+                  {state.auth.user?.role === 'adm' && (
+                    <th scope="col" className="px-6 py-3">
+                      <span className="sr-only">Edit</span>
+                    </th>
+                  )}
                 </tr>
               </thead>
               <tbody>
@@ -91,14 +105,19 @@ const Inventory: NextPage<InventoryProps> = ({
                     <td className="px-6 py-4">
                       {equipament.obs ? equipament.obs : <span>---</span>}
                     </td>
-                    <td className="flex items-center justify-center gap-1 px-6 py-4 ">
-                      <MdEdit className="h-5 w-5 cursor-pointer  text-neutral-500 hover:text-neutral-800" />
-                      <div className="h-5 w-0.5 bg-gray-200" />
-                      <MdDeleteForever
-                        onClick={() => handleDelete(equipament._id)}
-                        className="h-5 w-5 cursor-pointer text-rose-500 hover:text-rose-800"
-                      />
-                    </td>
+                    {state.auth.user?.role === 'adm' && (
+                      <td className="flex items-center justify-center gap-1 px-6 py-4 ">
+                        <MdEdit
+                          onClick={() => handleEdit(equipament)}
+                          className="h-5 w-5 cursor-pointer  text-neutral-500 hover:text-neutral-800"
+                        />
+                        <div className="h-5 w-0.5 bg-gray-200" />
+                        <MdDeleteForever
+                          onClick={() => handleDelete(equipament._id)}
+                          className="h-5 w-5 cursor-pointer text-rose-500 hover:text-rose-800"
+                        />
+                      </td>
+                    )}
                   </tr>
                 ))}
               </tbody>
@@ -111,6 +130,7 @@ const Inventory: NextPage<InventoryProps> = ({
         )}
       </Layout>
       {isOpen && <ModalDelete handleClose={handleClose} />}
+      {isOpenEdit && <Modal handleClose={handleClose} />}
     </>
   )
 }

@@ -1,7 +1,8 @@
 import { useRouter } from 'next/router'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { toast } from 'react-toastify'
-import { postData } from '../services'
+import { postData, putData } from '../services'
+import { GlobalContext } from '../store/GlobalStore'
 import { EquipamentProps } from '../types/Equipament'
 import { validEquipament } from '../utils/Valid'
 
@@ -10,15 +11,16 @@ interface ModalProps {
 }
 
 export const Modal = ({ handleClose }: ModalProps) => {
-  const inititalState = {
-    ns: '',
-    type: '',
-    brand: '',
-    model: '',
-    obs: '',
-    status: '',
-  } as EquipamentProps
+  const { state, dispatch } = useContext(GlobalContext)
 
+  const inititalState = {
+    ns: state.equipaments.ns ? state.equipaments.ns : '',
+    type: state.equipaments.type ? state.equipaments.type : '',
+    brand: state.equipaments.brand ? state.equipaments.brand : '',
+    model: state.equipaments.model ? state.equipaments.model : '',
+    obs: state.equipaments.obs ? state.equipaments.obs : '',
+    status: state.equipaments.status ? state.equipaments.status : '',
+  } as EquipamentProps
   const [equipamentData, setEquipamentData] = useState(inititalState)
 
   const router = useRouter()
@@ -35,6 +37,8 @@ export const Modal = ({ handleClose }: ModalProps) => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
+    console.log(equipamentData)
+
     const erroMsg = validEquipament(
       equipamentData.ns,
       equipamentData.type,
@@ -45,29 +49,53 @@ export const Modal = ({ handleClose }: ModalProps) => {
     if (erroMsg) return toast.error(erroMsg)
 
     const id = toast.loading('Carregando...')
-    const result = await postData('equipament', equipamentData)
-    if (result.success) {
-      toast.update(id, {
-        render: result.success,
-        type: 'success',
-        isLoading: false,
-        autoClose: 1000,
-        closeButton: true,
-      })
-      router.push('/inventory')
-      handleClose()
+    if (!state.equipaments.ns) {
+      const result = await postData('equipament', equipamentData)
+      if (result.success) {
+        toast.update(id, {
+          render: result.success,
+          type: 'success',
+          isLoading: false,
+          autoClose: 1000,
+          closeButton: true,
+        })
+      }
+      if (result.error) {
+        toast.update(id, {
+          render: result.error,
+          type: 'error',
+          isLoading: false,
+          autoClose: 1000,
+          closeButton: true,
+        })
+      }
+    } else {
+      const result = await putData(
+        `equipament/${state.equipaments._id}`,
+        equipamentData
+      )
+      if (result.success) {
+        toast.update(id, {
+          render: result.success,
+          type: 'success',
+          isLoading: false,
+          autoClose: 1000,
+          closeButton: true,
+        })
+      }
+      if (result.error) {
+        toast.update(id, {
+          render: result.error,
+          type: 'error',
+          isLoading: false,
+          autoClose: 1000,
+          closeButton: true,
+        })
+      }
     }
-    if (result.error) {
-      toast.update(id, {
-        render: result.error,
-        type: 'error',
-        isLoading: false,
-        autoClose: 1000,
-        closeButton: true,
-      })
-      router.push('/inventory')
-      handleClose()
-    }
+
+    router.push('/inventory')
+    handleClose()
   }
 
   return (
@@ -112,7 +140,7 @@ export const Modal = ({ handleClose }: ModalProps) => {
               id="type"
             >
               <option className="uppercase">Selecione</option>
-              <option className="uppercase" value="printer">
+              <option className="uppercase" value="impressora">
                 Impressora
               </option>
               <option className="uppercase" value="monitor">
@@ -168,7 +196,7 @@ export const Modal = ({ handleClose }: ModalProps) => {
               <option className="uppercase" value="lg">
                 LG
               </option>
-              <option className="uppercase" value="mac">
+              <option className="uppercase" value="macOS">
                 Mac OS
               </option>
               <option className="uppercase" value="samsung">
@@ -192,13 +220,13 @@ export const Modal = ({ handleClose }: ModalProps) => {
               onChange={handleChange}
             >
               <option className="uppercase">Selecione</option>
-              <option className="uppercase" value="new">
+              <option className="uppercase" value="novo">
                 Novo
               </option>
-              <option className="uppercase" value="used">
+              <option className="uppercase" value="usado">
                 Usado
               </option>
-              <option className="uppercase" value="bad">
+              <option className="uppercase" value="ruim">
                 Ruim
               </option>
             </select>
@@ -229,13 +257,21 @@ export const Modal = ({ handleClose }: ModalProps) => {
           >
             cancelar
           </button>
-
-          <button
-            type="submit"
-            className="rounded-lg bg-fuchsia-400 px-5 py-1.5 text-center text-sm font-medium uppercase text-white hover:bg-fuchsia-800 focus:outline-none focus:ring-4 focus:ring-fuchsia-400 dark:bg-fuchsia-400 dark:hover:bg-fuchsia-400 dark:focus:ring-fuchsia-400"
-          >
-            Criar
-          </button>
+          {state.equipaments.ns ? (
+            <button
+              type="submit"
+              className="rounded-lg bg-fuchsia-400 px-5 py-1.5 text-center text-sm font-medium uppercase text-white hover:bg-fuchsia-800 focus:outline-none focus:ring-4 focus:ring-fuchsia-400 dark:bg-fuchsia-400 dark:hover:bg-fuchsia-400 dark:focus:ring-fuchsia-400"
+            >
+              Editar
+            </button>
+          ) : (
+            <button
+              type="submit"
+              className="rounded-lg bg-fuchsia-400 px-5 py-1.5 text-center text-sm font-medium uppercase text-white hover:bg-fuchsia-800 focus:outline-none focus:ring-4 focus:ring-fuchsia-400 dark:bg-fuchsia-400 dark:hover:bg-fuchsia-400 dark:focus:ring-fuchsia-400"
+            >
+              Criar
+            </button>
+          )}
         </div>
       </form>
     </div>

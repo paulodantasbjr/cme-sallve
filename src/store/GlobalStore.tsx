@@ -1,7 +1,6 @@
 import { createContext, useEffect, useReducer } from 'react'
 import { toast } from 'react-toastify'
 import { getData } from '../services'
-
 import { reducers } from './Reducer'
 import { DataProviderProps, GlobalContextProps } from './store.types'
 
@@ -10,7 +9,7 @@ export const GlobalContext = createContext({} as GlobalContextProps)
 export const DataProvider = ({ children }: DataProviderProps) => {
   const initialState = {
     auth: {},
-    equipaments: '',
+    equipaments: {},
   }
   const [state, dispatch] = useReducer(reducers, initialState)
 

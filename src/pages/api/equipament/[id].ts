@@ -39,7 +39,30 @@ const getEquipament = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 }
 
-const updateEquipament = async (req: NextApiRequest, res: NextApiResponse) => {}
+const updateEquipament = async (req: NextApiRequest, res: NextApiResponse) => {
+  try {
+    const { id } = req.query
+    const { ns, type, model, brand, status, obs } = req.body
+
+    const equipament = await Equipament.findOneAndUpdate(
+      { _id: id },
+      {
+        ns: ns.toUpperCase(),
+        type: type.toUpperCase(),
+        model: model.toUpperCase(),
+        brand: brand.toUpperCase(),
+        status: status.toUpperCase(),
+        obs,
+      }
+    )
+    if (!equipament)
+      return res.status(404).json({ error: 'Equipamento nao encontrado' })
+
+    res.json({ success: 'Equipamento editado com sucesso' })
+  } catch (error: any) {
+    res.status(500).json({ error: error.message })
+  }
+}
 
 const deleteEquipament = async (req: NextApiRequest, res: NextApiResponse) => {
   try {

@@ -13,6 +13,11 @@ export const reducers = (state: State, action: Action) => {
         ...state,
         equipaments: action.payload,
       }
+    case ACTIONS.EDIT_EQUIPAMENT:
+      return {
+        ...state,
+        equipaments: action.payload,
+      }
     default:
       return state
   }
