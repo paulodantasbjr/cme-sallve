@@ -1,8 +1,10 @@
 import 'react-toastify/dist/ReactToastify.css'
 import '../styles/globals.css'
+
 import type { AppProps } from 'next/app'
-import { DataProvider } from '../store/GlobalStore'
 import { ToastContainer } from 'react-toastify'
+
+import { DataProvider } from '../store/GlobalStore'
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
   return (

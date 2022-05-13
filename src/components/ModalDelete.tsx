@@ -1,9 +1,11 @@
-import { useRouter } from 'next/router'
 import { useContext } from 'react'
+
 import { MdClose, MdErrorOutline } from 'react-icons/md'
+import { useRouter } from 'next/router'
 import { toast } from 'react-toastify'
-import { deleteData } from '../services'
+
 import { GlobalContext } from '../store/GlobalStore'
+import { deleteData } from '../services'
 
 interface ModalDeleteProps {
   handleClose: () => void

@@ -17,6 +17,10 @@ const userSchema = new Schema<UserProps>(
       type: String,
       required: true,
     },
+    root: {
+      type: Boolean,
+      default: false,
+    },
     role: {
       type: String,
       default: 'user',

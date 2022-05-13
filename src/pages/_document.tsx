@@ -15,7 +15,7 @@ class MyDocument extends Document {
 
   render() {
     return (
-      <Html>
+      <Html lang="pt-br">
         <Head>
           <link rel="shortcut icon" href="/favicon.webp" type="/favicon.webp" />
         </Head>

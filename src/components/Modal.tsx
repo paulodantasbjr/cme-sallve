@@ -1,17 +1,19 @@
-import { useRouter } from 'next/router'
 import { useContext, useState } from 'react'
+
+import { useRouter } from 'next/router'
 import { toast } from 'react-toastify'
-import { postData, putData } from '../services'
-import { GlobalContext } from '../store/GlobalStore'
+
 import { EquipamentProps } from '../types/Equipament'
+import { GlobalContext } from '../store/GlobalStore'
 import { validEquipament } from '../utils/Valid'
+import { postData, putData } from '../services'
 
 interface ModalProps {
   handleClose: () => void
 }
 
 export const Modal = ({ handleClose }: ModalProps) => {
-  const { state, dispatch } = useContext(GlobalContext)
+  const { state } = useContext(GlobalContext)
 
   const inititalState = {
     ns: state.equipaments.ns ? state.equipaments.ns : '',

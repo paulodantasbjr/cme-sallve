@@ -1,14 +1,16 @@
+import { useContext, useEffect, useState } from 'react'
+
 import type { NextPage } from 'next'
 import Head from 'next/head'
-
-import { IoMdArrowBack } from 'react-icons/io'
 import Link from 'next/link'
-import { useContext, useEffect, useState } from 'react'
-import { validUser } from '../utils/Valid'
-import { toast } from 'react-toastify'
-import { postData } from '../services'
 import { useRouter } from 'next/router'
+
+import { toast } from 'react-toastify'
+import { IoMdArrowBack } from 'react-icons/io'
+
 import { GlobalContext } from '../store/GlobalStore'
+import { postData } from '../services'
+import { validUser } from '../utils/Valid'
 
 const Register: NextPage = () => {
   const initialState = {
@@ -40,6 +42,7 @@ const Register: NextPage = () => {
 
     const id = toast.loading('Carregando...')
     const result = await postData('auth/register', userData)
+
     if (result.success) {
       toast.update(id, {
         render: result.success,

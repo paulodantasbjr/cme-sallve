@@ -1,6 +1,5 @@
 import type { GetServerSideProps, NextPage } from 'next'
 import Head from 'next/head'
-import { useRouter } from 'next/router'
 import { useContext, useEffect, useState } from 'react'
 import { Layout } from '../components/Layout'
 import { getData } from '../services'
@@ -21,12 +20,7 @@ const Inventory: NextPage<InventoryProps> = ({
 }: InventoryProps) => {
   const [isOpen, setIsOpen] = useState(false)
   const [isOpenEdit, setIsOpenEdit] = useState(false)
-  const router = useRouter()
   const { state, dispatch } = useContext(GlobalContext)
-
-  useEffect(() => {
-    if (!state.auth.token) router.push('/login')
-  }, [router, state.auth])
 
   const handleClose = () => {
     dispatch({ type: 'EDIT_EQUIPAMENT', payload: {} })

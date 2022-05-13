@@ -1,25 +1,24 @@
-import Cookies from 'js-cookie'
+import { useContext } from 'react'
+
 import Image from 'next/image'
 import Link from 'next/link'
 import Router from 'next/router'
-import { useContext } from 'react'
 
 import { HiChartPie, HiLogout, HiUser, HiClipboardList } from 'react-icons/hi'
-import { toast } from 'react-toastify'
+
 import { GlobalContext } from '../store/GlobalStore'
+import { onLogout } from '../utils/onLogout'
 
 export const Sidebar = () => {
   const { state, dispatch } = useContext(GlobalContext)
 
   const handleLogout = () => {
-    Cookies.remove('refreshToken', { path: 'api/auth/accessToken' })
-    localStorage.removeItem('firstLogin')
-    dispatch({ type: 'AUTH', payload: {} })
-    toast.success('Desconectado realizado com sucesso!')
+    dispatch(onLogout())
     return Router.push('/login')
   }
+
   return (
-    <aside className="w-64  shadow-lg">
+    <aside className="w-64 shadow-lg">
       <nav className="relative h-full rounded bg-white py-4 px-3 dark:bg-gray-800">
         <Link href="/">
           <a className="block text-center ">

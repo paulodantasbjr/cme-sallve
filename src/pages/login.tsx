@@ -1,12 +1,15 @@
+import { useContext, useEffect, useState } from 'react'
+
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { useContext, useEffect, useState } from 'react'
-import { toast } from 'react-toastify'
-import { postData } from '../services'
-import { GlobalContext } from '../store/GlobalStore'
+
 import Cookies from 'js-cookie'
+import { toast } from 'react-toastify'
+
+import { GlobalContext } from '../store/GlobalStore'
+import { postData } from '../services'
 
 const Login: NextPage = () => {
   const initialState = {
@@ -30,6 +33,16 @@ const Login: NextPage = () => {
     const id = toast.loading('Carregando...')
     const result = await postData('auth/login', userData)
 
+    if (result.error) {
+      toast.update(id, {
+        render: result.error,
+        type: 'error',
+        isLoading: false,
+        autoClose: 1000,
+        closeButton: true,
+      })
+    }
+
     if (result.success) {
       toast.update(id, {
         render: result.success,
@@ -52,16 +65,6 @@ const Login: NextPage = () => {
       })
 
       window.localStorage.setItem('firstLogin', 'true')
-    }
-
-    if (result.error) {
-      toast.update(id, {
-        render: result.error,
-        type: 'error',
-        isLoading: false,
-        autoClose: 1000,
-        closeButton: true,
-      })
     }
   }
 

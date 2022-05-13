@@ -1,7 +1,10 @@
-import Image from 'next/image'
 import { useContext, useState } from 'react'
-import { GlobalContext } from '../store/GlobalStore'
+
+import Image from 'next/image'
+
 import { AiOutlinePlus } from 'react-icons/ai'
+
+import { GlobalContext } from '../store/GlobalStore'
 import { Modal } from './Modal'
 
 export const Navbar = () => {
