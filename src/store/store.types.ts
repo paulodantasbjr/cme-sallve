@@ -20,9 +20,9 @@ export interface State {
 }
 
 export interface GlobalStateProps {
-  equipaments: EquipamentProps
+  equipaments: EquipamentProps[]
   auth: AuthProps
-  users: UserProps
+  users: UserProps[]
 }
 
 export interface DataProviderProps {
