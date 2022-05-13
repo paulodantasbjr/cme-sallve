@@ -29,7 +29,7 @@ const login = async (req: NextApiRequest, res: NextApiResponse) => {
     const { email, password } = req.body
 
     const user = await User.findOne({ email })
-    if (!user) return res.status(400).json({ error: 'usuaŕio nao encontrado' })
+    if (!user) return res.status(400).json({ error: 'Usuaŕio nao encontrado' })
 
     const isPasswordMatch = await compare(password, user.password)
     if (!isPasswordMatch)

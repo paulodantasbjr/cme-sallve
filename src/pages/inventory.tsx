@@ -1,13 +1,15 @@
+import { useContext, useState } from 'react'
+
 import type { GetServerSideProps, NextPage } from 'next'
 import Head from 'next/head'
-import { useContext, useEffect, useState } from 'react'
-import { Layout } from '../components/Layout'
+
+import { EquipamentProps } from '../types/Equipament'
 import { getData } from '../services'
 import { GlobalContext } from '../store/GlobalStore'
-import { EquipamentProps } from '../types/Equipament'
-import { MdEdit, MdDeleteForever } from 'react-icons/md'
-import { ModalDelete } from '../components/ModalDelete'
+import { Layout } from '../components/Layout'
 import { Modal } from '../components/Modal'
+import { ModalDelete } from '../components/ModalDelete'
+import { TableBodyEquipaments, TableHead } from '../components/Table'
 
 interface InventoryProps {
   equipaments: EquipamentProps[]
@@ -22,24 +24,33 @@ const Inventory: NextPage<InventoryProps> = ({
   const [isOpenEdit, setIsOpenEdit] = useState(false)
   const { state, dispatch } = useContext(GlobalContext)
 
+  const th = [
+    { id: 1, name: 'Número de série' },
+    { id: 2, name: 'tipo' },
+    { id: 3, name: 'modelo' },
+    { id: 4, name: 'marca' },
+    { id: 5, name: 'status' },
+    { id: 6, name: 'obs' },
+  ]
+
   const handleClose = () => {
-    dispatch({ type: 'EDIT_EQUIPAMENT', payload: {} })
+    dispatch({ type: 'EQUIPAMENT', payload: {} })
     setIsOpen(false)
     setIsOpenEdit(false)
   }
 
   const handleEdit = (equipament: EquipamentProps) => {
     dispatch({
-      type: 'EDIT_EQUIPAMENT',
+      type: 'EQUIPAMENT',
       payload: equipament,
     })
     setIsOpenEdit(!isOpen)
   }
 
-  const handleDelete = (id: string) => {
+  const handleDelete = (equipament: EquipamentProps) => {
     dispatch({
-      type: 'DELETE_EQUIPAMENT',
-      payload: id,
+      type: 'EQUIPAMENT',
+      payload: equipament,
     })
     setIsOpen(!isOpen)
   }
@@ -54,66 +65,15 @@ const Inventory: NextPage<InventoryProps> = ({
           <div className="relative flex-grow overflow-x-auto p-4 shadow-md sm:rounded-lg">
             <table className="w-full text-left text-sm text-gray-500 dark:text-gray-400">
               <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
-                <tr>
-                  <th scope="col" className="px-6 py-3">
-                    Número de série
-                  </th>
-                  <th scope="col" className="px-6 py-3">
-                    tipo
-                  </th>
-                  <th scope="col" className="px-6 py-3">
-                    modelo
-                  </th>
-                  <th scope="col" className="px-6 py-3">
-                    marca
-                  </th>
-                  <th scope="col" className="px-6 py-3">
-                    status
-                  </th>
-                  <th scope="col" className="px-6 py-3">
-                    obs
-                  </th>
-                  {state.auth.user?.role === 'adm' && (
-                    <th scope="col" className="px-6 py-3">
-                      <span className="sr-only">Edit</span>
-                    </th>
-                  )}
-                </tr>
+                <TableHead th={th} role={state.auth.user?.role} />
               </thead>
               <tbody>
-                {equipaments.map((equipament) => (
-                  <tr
-                    key={equipament.ns}
-                    className="border-b bg-white hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-600"
-                  >
-                    <th
-                      scope="row"
-                      className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white"
-                    >
-                      {equipament.ns}
-                    </th>
-                    <td className="px-6 py-4">{equipament.type}</td>
-                    <td className="px-6 py-4">{equipament.model}</td>
-                    <td className="px-6 py-4">{equipament.brand}</td>
-                    <td className="px-6 py-4">{equipament.status}</td>
-                    <td className="px-6 py-4">
-                      {equipament.obs ? equipament.obs : <span>---</span>}
-                    </td>
-                    {state.auth.user?.role === 'adm' && (
-                      <td className="flex items-center justify-center gap-1 px-6 py-4 ">
-                        <MdEdit
-                          onClick={() => handleEdit(equipament)}
-                          className="h-5 w-5 cursor-pointer  text-neutral-500 hover:text-neutral-800"
-                        />
-                        <div className="h-5 w-0.5 bg-gray-200" />
-                        <MdDeleteForever
-                          onClick={() => handleDelete(equipament._id)}
-                          className="h-5 w-5 cursor-pointer text-rose-500 hover:text-rose-800"
-                        />
-                      </td>
-                    )}
-                  </tr>
-                ))}
+                <TableBodyEquipaments
+                  role={state.auth.user?.role}
+                  equipaments={equipaments}
+                  handleEdit={handleEdit}
+                  handleDelete={handleDelete}
+                />
               </tbody>
             </table>
           </div>
@@ -123,7 +83,14 @@ const Inventory: NextPage<InventoryProps> = ({
           </div>
         )}
       </Layout>
-      {isOpen && <ModalDelete handleClose={handleClose} />}
+      {isOpen && (
+        <ModalDelete
+          callback="/inventory"
+          url={`equipament/${state.equipaments._id}`}
+          title="Você tem certeza que deseja excluir esse equipamento?"
+          handleClose={handleClose}
+        />
+      )}
       {isOpenEdit && <Modal handleClose={handleClose} />}
     </>
   )

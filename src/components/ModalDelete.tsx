@@ -1,46 +1,29 @@
-import { useContext } from 'react'
+import { useRouter } from 'next/router'
 
 import { MdClose, MdErrorOutline } from 'react-icons/md'
-import { useRouter } from 'next/router'
-import { toast } from 'react-toastify'
 
-import { GlobalContext } from '../store/GlobalStore'
-import { deleteData } from '../services'
+import { DeleteToastHelper } from '../utils/ToastHelper'
 
 interface ModalDeleteProps {
   handleClose: () => void
+  title: string
+  url: string
+  callback: string
 }
 
-export const ModalDelete = ({ handleClose }: ModalDeleteProps) => {
-  const { state } = useContext(GlobalContext)
-
+export const ModalDelete = ({
+  handleClose,
+  title,
+  url,
+  callback,
+}: ModalDeleteProps) => {
   const router = useRouter()
 
   const handleDelete = async () => {
-    const loadingToast = toast.loading('Carregando...')
+    await DeleteToastHelper(url)
 
-    const result = await deleteData(`equipament/${state.equipaments}`)
-    if (result.success) {
-      toast.update(loadingToast, {
-        render: result.success,
-        type: 'success',
-        isLoading: false,
-        autoClose: 1000,
-        closeButton: true,
-      })
-    }
-
-    if (result.error) {
-      toast.update(loadingToast, {
-        render: result.error,
-        type: 'error',
-        isLoading: false,
-        autoClose: 1000,
-        closeButton: true,
-      })
-    }
     handleClose()
-    router.push('/inventory')
+    router.push(callback)
   }
 
   return (
@@ -56,7 +39,7 @@ export const ModalDelete = ({ handleClose }: ModalDeleteProps) => {
         <div className="p-6 text-center">
           <MdErrorOutline className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200" />
           <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
-            Você tem certeza que deseja excluir esse equipamento?
+            {title}
           </h3>
           <div className="flex justify-evenly">
             <button

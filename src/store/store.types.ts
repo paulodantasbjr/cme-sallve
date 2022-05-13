@@ -1,4 +1,5 @@
 import { Dispatch, ReactNode } from 'react'
+
 import { EquipamentProps } from '../types/Equipament'
 import { UserProps } from '../types/User'
 
@@ -14,12 +15,14 @@ export interface Action {
 
 export interface State {
   auth: AuthProps
-  equipaments: any
+  equipaments: EquipamentProps[]
+  users: UserProps[]
 }
 
 export interface GlobalStateProps {
-  equipaments: any
+  equipaments: EquipamentProps
   auth: AuthProps
+  users: UserProps
 }
 
 export interface DataProviderProps {

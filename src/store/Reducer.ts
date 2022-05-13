@@ -8,15 +8,15 @@ export const reducers = (state: State, action: Action) => {
         ...state,
         auth: action.payload,
       }
-    case ACTIONS.DELETE_EQUIPAMENT:
+    case ACTIONS.EQUIPAMENT:
       return {
         ...state,
         equipaments: action.payload,
       }
-    case ACTIONS.EDIT_EQUIPAMENT:
+    case ACTIONS.USER:
       return {
         ...state,
-        equipaments: action.payload,
+        users: action.payload,
       }
     default:
       return state
