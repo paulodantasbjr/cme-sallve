@@ -7,8 +7,8 @@ import { EquipamentProps } from '../types/Equipament'
 import { getData } from '../services'
 import { GlobalContext } from '../store/GlobalStore'
 import { Layout } from '../components/Layout'
-import { Modal } from '../components/Modal'
 import { ModalDelete } from '../components/ModalDelete'
+import { ModalEquipament } from '../components/ModalEquipament'
 import { TableBodyEquipaments, TableHead } from '../components/Table'
 
 interface InventoryProps {
@@ -91,7 +91,7 @@ const Inventory: NextPage<InventoryProps> = ({
           handleClose={handleClose}
         />
       )}
-      {isOpenEdit && <Modal handleClose={handleClose} />}
+      {isOpenEdit && <ModalEquipament handleClose={handleClose} />}
     </>
   )
 }

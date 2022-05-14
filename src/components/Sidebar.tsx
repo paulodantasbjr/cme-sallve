@@ -49,7 +49,7 @@ export const Sidebar = () => {
               </a>
             </Link>
           </li>
-          {state.auth.user?.role === 'adm' && (
+          {state.auth.user?.role === 'ADM' && (
             <li>
               <Link href="/user">
                 <a className="flex items-center rounded-lg p-2 text-base font-normal text-gray-900 hover:bg-lime-200 dark:text-white dark:hover:bg-gray-700">

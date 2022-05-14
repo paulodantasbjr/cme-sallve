@@ -35,7 +35,7 @@ export const TableHead = ({ th, role }: TableHeadProps) => {
           {thItem.name}
         </th>
       ))}
-      {role === 'adm' && <th scope="col" className="px-6 py-3" />}
+      {role === 'ADM' && <th scope="col" className="px-6 py-3" />}
     </tr>
   )
 }
@@ -57,16 +57,16 @@ export const TableBodyUser = ({
           <td className="px-6 py-4 uppercase">{user.email}</td>
           <td className="px-6 py-4 uppercase">{user.name}</td>
           <td className="px-6 py-4 uppercase">{user.role}</td>
-          {role === 'adm' && (
+          {role === 'ADM' && (
             <>
-              <td className="flex items-center justify-center gap-1 px-6 py-4 ">
+              <td className="px-6 py-4">
                 <MdEdit
                   onClick={() => handleEdit(user)}
                   className="h-5 w-5 cursor-pointer  text-neutral-500 hover:text-neutral-800"
                 />
               </td>
 
-              <td>
+              <td className="px-6 py-4">
                 <MdDeleteForever
                   onClick={() => handleDelete(user)}
                   className="h-5 w-5 cursor-pointer text-rose-500 hover:text-rose-800"
@@ -101,16 +101,16 @@ export const TableBodyEquipaments = ({
           <td className="px-6 py-4">
             {equipament.obs ? equipament.obs : <span>---</span>}
           </td>
-          {role === 'adm' && (
+          {role === 'ADM' && (
             <>
-              <td className="flex items-center justify-center gap-1 px-6 py-4 ">
+              <td className="px-6 py-4">
                 <MdEdit
                   onClick={() => handleEdit(equipament)}
                   className="h-5 w-5 cursor-pointer  text-neutral-500 hover:text-neutral-800"
                 />
               </td>
 
-              <td>
+              <td className="px-6 py-4">
                 <MdDeleteForever
                   onClick={() => handleDelete(equipament)}
                   className="h-5 w-5 cursor-pointer text-rose-500 hover:text-rose-800"

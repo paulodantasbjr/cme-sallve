@@ -1,9 +1,8 @@
-import { toast } from 'react-toastify'
-import { deleteData } from '../services'
+import { Id, toast } from 'react-toastify'
 
-export const DeleteToastHelper = async (url: string) => {
-  const id = toast.loading('Carregando...')
-  const result = await deleteData(url)
+import { deleteData, postData, putData } from '../services'
+
+const infoMsg = (id: Id, result: any) => {
   if (result.success) {
     toast.update(id, {
       render: result.success,
@@ -22,4 +21,27 @@ export const DeleteToastHelper = async (url: string) => {
       closeButton: true,
     })
   }
+}
+
+export const DeleteToastHelper = async (url: string) => {
+  const id = toast.loading('Carregando...')
+  const result = await deleteData(url)
+
+  infoMsg(id, result)
+}
+
+export const PostToastHelper = async (url: string, data: any) => {
+  const id = toast.loading('Carregando...')
+  const result = await postData(url, data)
+
+  infoMsg(id, result)
+
+  return result
+}
+
+export const PutToastHelper = async (url: string, data: any) => {
+  const id = toast.loading('Carregando...')
+  const result = await putData(url, data)
+
+  infoMsg(id, result)
 }

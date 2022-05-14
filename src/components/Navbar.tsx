@@ -5,7 +5,7 @@ import Image from 'next/image'
 import { AiOutlinePlus } from 'react-icons/ai'
 
 import { GlobalContext } from '../store/GlobalStore'
-import { Modal } from './Modal'
+import { ModalEquipament } from './ModalEquipament'
 
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false)
@@ -19,10 +19,10 @@ export const Navbar = () => {
     <>
       <header
         className={`flex h-16 items-center ${
-          state.auth.user?.role === 'adm' ? 'justify-between' : 'justify-end'
+          state.auth.user?.role === 'ADM' ? 'justify-between' : 'justify-end'
         }  bg-white shadow-lg`}
       >
-        {state.auth.user?.role === 'adm' && (
+        {state.auth.user?.role === 'ADM' && (
           <button
             onClick={handleClick}
             className="ml-4 flex items-center justify-center gap-1 rounded-lg bg-fuchsia-400 p-2 text-sm font-normal uppercase text-white transition duration-75 hover:bg-fuchsia-600 dark:text-white dark:hover:bg-gray-700 "
@@ -47,7 +47,7 @@ export const Navbar = () => {
           </div>
         </div>
       </header>
-      {isOpen && <Modal handleClose={handleClick} />}
+      {isOpen && <ModalEquipament handleClose={handleClick} />}
     </>
   )
 }

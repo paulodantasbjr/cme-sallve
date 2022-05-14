@@ -6,7 +6,7 @@ const validateEmail = (email: string) => {
 
 export const validUser = (
   email: string,
-  password: string,
+  password?: string,
   name?: string,
   passwordConfirm?: string
 ) => {

@@ -5,17 +5,17 @@ import { toast } from 'react-toastify'
 
 import { EquipamentProps } from '../types/Equipament'
 import { GlobalContext } from '../store/GlobalStore'
+import { PostToastHelper, PutToastHelper } from '../utils/ToastHelper'
 import { validEquipament } from '../utils/Valid'
-import { postData, putData } from '../services'
 
-interface ModalProps {
+interface ModalEquipamentProps {
   handleClose: () => void
 }
 
-export const Modal = ({ handleClose }: ModalProps) => {
+export const ModalEquipament = ({ handleClose }: ModalEquipamentProps) => {
   const { state } = useContext(GlobalContext)
 
-  const inititalState = {
+  const initialState = {
     ns: state.equipaments.ns ? state.equipaments.ns : '',
     type: state.equipaments.type ? state.equipaments.type : '',
     brand: state.equipaments.brand ? state.equipaments.brand : '',
@@ -23,7 +23,7 @@ export const Modal = ({ handleClose }: ModalProps) => {
     obs: state.equipaments.obs ? state.equipaments.obs : '',
     status: state.equipaments.status ? state.equipaments.status : '',
   } as EquipamentProps
-  const [equipamentData, setEquipamentData] = useState(inititalState)
+  const [equipamentData, setEquipamentData] = useState(initialState)
 
   const router = useRouter()
 
@@ -39,8 +39,6 @@ export const Modal = ({ handleClose }: ModalProps) => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    console.log(equipamentData)
-
     const erroMsg = validEquipament(
       equipamentData.ns,
       equipamentData.type,
@@ -50,52 +48,14 @@ export const Modal = ({ handleClose }: ModalProps) => {
     )
     if (erroMsg) return toast.error(erroMsg)
 
-    const id = toast.loading('Carregando...')
-    if (!state.equipaments.ns) {
-      const result = await postData('equipament', equipamentData)
-      if (result.success) {
-        toast.update(id, {
-          render: result.success,
-          type: 'success',
-          isLoading: false,
-          autoClose: 1000,
-          closeButton: true,
-        })
-      }
-      if (result.error) {
-        toast.update(id, {
-          render: result.error,
-          type: 'error',
-          isLoading: false,
-          autoClose: 1000,
-          closeButton: true,
-        })
-      }
+    if (!state.equipaments._id) {
+      await PostToastHelper('equipament', equipamentData)
     } else {
-      const result = await putData(
+      await PutToastHelper(
         `equipament/${state.equipaments._id}`,
         equipamentData
       )
-      if (result.success) {
-        toast.update(id, {
-          render: result.success,
-          type: 'success',
-          isLoading: false,
-          autoClose: 1000,
-          closeButton: true,
-        })
-      }
-      if (result.error) {
-        toast.update(id, {
-          render: result.error,
-          type: 'error',
-          isLoading: false,
-          autoClose: 1000,
-          closeButton: true,
-        })
-      }
     }
-
     router.push('/inventory')
     handleClose()
   }
@@ -106,7 +66,9 @@ export const Modal = ({ handleClose }: ModalProps) => {
         className="flex w-96 flex-col gap-4 rounded-lg bg-neutral-100 p-4"
         onSubmit={handleSubmit}
       >
-        <h1 className="text-center text-2xl font-bold">Novo equipamento</h1>
+        <h1 className="text-center text-2xl font-bold">
+          {!state.equipaments._id ? 'Novo equipamento' : 'Editar equipamento'}
+        </h1>
         <div className="flex gap-4">
           <div className="flex flex-1 flex-col">
             <label

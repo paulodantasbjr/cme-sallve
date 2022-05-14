@@ -13,6 +13,9 @@ export default async function handler(
     case 'DELETE':
       await deleteUser(req, res)
       break
+    case 'PUT':
+      await updateUser(req, res)
+      break
     default:
       break
   }
@@ -28,6 +31,28 @@ const deleteUser = async (req: NextApiRequest, res: NextApiResponse) => {
     res.status(200).json({
       success: 'Usuário deletado com sucesso',
     })
+  } catch (error: any) {
+    res.status(500).json({ error: error.message })
+  }
+}
+
+const updateUser = async (req: NextApiRequest, res: NextApiResponse) => {
+  try {
+    const { id } = req.query
+    const { name, email, role } = req.body
+
+    const user = await User.findOneAndUpdate(
+      { _id: id },
+      {
+        name: name.toUpperCase(),
+        type: email.toUpperCase(),
+        role: role.toUpperCase(),
+      }
+    )
+
+    if (!user) return res.status(404).json({ error: 'Usuário nao encontrado' })
+
+    res.json({ success: 'Usuário editado com sucesso' })
   } catch (error: any) {
     res.status(500).json({ error: error.message })
   }
