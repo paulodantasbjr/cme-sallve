@@ -19,7 +19,7 @@ const userSchema = new Schema<UserProps>(
     },
     role: {
       type: String,
-      default: 'user',
+      default: 'USER',
     },
     avatar: {
       type: String,

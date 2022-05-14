@@ -2,7 +2,7 @@ import { useContext } from 'react'
 
 import Image from 'next/image'
 import Link from 'next/link'
-import Router from 'next/router'
+import { useRouter } from 'next/router'
 
 import { HiChartPie, HiLogout, HiUser, HiClipboardList } from 'react-icons/hi'
 
@@ -12,9 +12,15 @@ import { onLogout } from '../utils/onLogout'
 export const Sidebar = () => {
   const { state, dispatch } = useContext(GlobalContext)
 
+  const router = useRouter()
+
+  const isActive = (path: string) => {
+    return router.pathname === path ? 'bg-lime-200' : ''
+  }
+
   const handleLogout = () => {
     dispatch(onLogout())
-    return Router.push('/login')
+    return router.push('/login')
   }
 
   return (
@@ -35,7 +41,11 @@ export const Sidebar = () => {
         <ul className="space-y-2">
           <li>
             <Link href="/">
-              <a className="flex items-center rounded-lg p-2 text-base font-normal text-gray-900 hover:bg-lime-200 dark:text-white dark:hover:bg-gray-700">
+              <a
+                className={`${isActive(
+                  '/'
+                )} flex items-center rounded-lg p-2 text-base font-normal text-gray-900 hover:bg-lime-200 dark:text-white dark:hover:bg-gray-700`}
+              >
                 <HiChartPie className="h-6 w-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" />
                 <span className="ml-3">Dashboard</span>
               </a>
@@ -43,7 +53,11 @@ export const Sidebar = () => {
           </li>
           <li>
             <Link href="/inventory">
-              <a className="flex items-center rounded-lg p-2 text-base font-normal text-gray-900 hover:bg-lime-200 dark:text-white dark:hover:bg-gray-700">
+              <a
+                className={`${isActive(
+                  '/inventory'
+                )} flex items-center rounded-lg p-2 text-base font-normal text-gray-900 hover:bg-lime-200 dark:text-white dark:hover:bg-gray-700`}
+              >
                 <HiClipboardList className="h-6 w-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" />
                 <span className="ml-3">Inventário</span>
               </a>
@@ -52,7 +66,11 @@ export const Sidebar = () => {
           {state.auth.user?.role === 'ADM' && (
             <li>
               <Link href="/user">
-                <a className="flex items-center rounded-lg p-2 text-base font-normal text-gray-900 hover:bg-lime-200 dark:text-white dark:hover:bg-gray-700">
+                <a
+                  className={`${isActive(
+                    '/user'
+                  )} flex items-center rounded-lg p-2 text-base font-normal text-gray-900 hover:bg-lime-200 dark:text-white dark:hover:bg-gray-700`}
+                >
                   <HiUser className="h-6 w-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" />
                   <span className="ml-3">Usuários</span>
                 </a>
