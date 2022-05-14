@@ -44,7 +44,7 @@ export const Sidebar = () => {
               <a
                 className={`${isActive(
                   '/'
-                )} flex items-center rounded-lg p-2 text-base font-normal text-gray-900 hover:bg-lime-200 dark:text-white dark:hover:bg-gray-700`}
+                )} flex items-center rounded-lg p-2 text-base font-normal text-gray-900 hover:bg-lime-100 dark:text-white dark:hover:bg-gray-700`}
               >
                 <HiChartPie className="h-6 w-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" />
                 <span className="ml-3">Dashboard</span>
@@ -56,7 +56,7 @@ export const Sidebar = () => {
               <a
                 className={`${isActive(
                   '/inventory'
-                )} flex items-center rounded-lg p-2 text-base font-normal text-gray-900 hover:bg-lime-200 dark:text-white dark:hover:bg-gray-700`}
+                )} flex items-center rounded-lg p-2 text-base font-normal text-gray-900 hover:bg-lime-100 dark:text-white dark:hover:bg-gray-700`}
               >
                 <HiClipboardList className="h-6 w-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" />
                 <span className="ml-3">Inventário</span>
@@ -69,7 +69,7 @@ export const Sidebar = () => {
                 <a
                   className={`${isActive(
                     '/user'
-                  )} flex items-center rounded-lg p-2 text-base font-normal text-gray-900 hover:bg-lime-200 dark:text-white dark:hover:bg-gray-700`}
+                  )} flex items-center rounded-lg p-2 text-base font-normal text-gray-900 hover:bg-lime-100 dark:text-white dark:hover:bg-gray-700`}
                 >
                   <HiUser className="h-6 w-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" />
                   <span className="ml-3">Usuários</span>
