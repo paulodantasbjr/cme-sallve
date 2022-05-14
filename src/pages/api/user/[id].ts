@@ -2,6 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next'
 
 import { connectDB } from '../../../utils/DB'
 import { User } from '../../../../models/userModel'
+import { hash } from 'bcrypt'
 
 connectDB()
 
@@ -39,17 +40,18 @@ const deleteUser = async (req: NextApiRequest, res: NextApiResponse) => {
 const updateUser = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const { id } = req.query
-    const { name, email, role } = req.body
+    const { name, password, role } = req.body
+
+    const passwordHash = await hash(password, 12)
 
     const user = await User.findOneAndUpdate(
       { _id: id },
       {
         name: name.toUpperCase(),
-        type: email.toUpperCase(),
+        password: passwordHash,
         role: role.toUpperCase(),
       }
     )
-
     if (!user) return res.status(404).json({ error: 'Usuário nao encontrado' })
 
     res.json({ success: 'Usuário editado com sucesso' })

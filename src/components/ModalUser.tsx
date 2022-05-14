@@ -1,9 +1,7 @@
 import { useRouter } from 'next/router'
 import { useContext, useState } from 'react'
-import { toast } from 'react-toastify'
 import { GlobalContext } from '../store/GlobalStore'
 import { PutToastHelper } from '../utils/ToastHelper'
-import { validUser } from '../utils/Valid'
 
 interface ModalProps {
   handleClose: () => void
@@ -15,6 +13,7 @@ export const ModalUser = ({ handleClose }: ModalProps) => {
   const initialState = {
     name: state.users.name ? state.users.name : '',
     email: state.users.email ? state.users.email : '',
+    password: state.users.password ? state.users.password : '',
     role: state.users.role ? state.users.role : '',
   }
   const [userData, setEquipamentData] = useState(initialState)
@@ -79,6 +78,7 @@ export const ModalUser = ({ handleClose }: ModalProps) => {
               id="email"
               type="email"
               required
+              disabled
               name="email"
               value={userData.email}
               onChange={handleChange}
@@ -108,6 +108,23 @@ export const ModalUser = ({ handleClose }: ModalProps) => {
                 user
               </option>
             </select>
+          </div>
+          <div className="flex flex-1 flex-col">
+            <label
+              className="text-xs font-bold uppercase tracking-wide text-gray-700"
+              htmlFor="password"
+            >
+              nova Senha
+            </label>
+            <input
+              className="w-full rounded border border-gray-200 bg-gray-50 p-2 leading-tight text-gray-700 focus:border-gray-500 focus:bg-white focus:outline-none"
+              id="password"
+              type="password"
+              required
+              name="password"
+              value={userData.password}
+              onChange={handleChange}
+            />
           </div>
           <div className=" flex items-center justify-between">
             <button
