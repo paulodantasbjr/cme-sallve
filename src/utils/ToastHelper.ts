@@ -1,10 +1,10 @@
 import { Id, toast } from 'react-toastify'
 
-import { deleteData, postData, putData, patchData } from '../services'
+import { deleteData, postData, putData, patchData, getData } from '../services'
 
 const infoMsg = (id: Id, result: any) => {
   if (result.success) {
-    toast.update(id, {
+    return toast.update(id, {
       render: result.success,
       type: 'success',
       isLoading: false,
@@ -13,7 +13,7 @@ const infoMsg = (id: Id, result: any) => {
     })
   }
   if (result.error) {
-    toast.update(id, {
+    return toast.update(id, {
       render: result.error,
       type: 'error',
       isLoading: false,
@@ -21,6 +21,15 @@ const infoMsg = (id: Id, result: any) => {
       closeButton: true,
     })
   }
+}
+
+export const GetToastHelper = async (url: string) => {
+  const result = await getData(url)
+  if (result.error) {
+    return toast.error(result.error)
+  }
+
+  return result
 }
 
 export const DeleteToastHelper = async (url: string) => {

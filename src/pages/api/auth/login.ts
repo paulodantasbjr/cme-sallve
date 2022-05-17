@@ -35,8 +35,8 @@ const login = async (req: NextApiRequest, res: NextApiResponse) => {
     if (!isPasswordMatch)
       return res.status(400).json({ error: 'senha incorreta' })
 
-    const accessToken = createAccessToken({ id: user._id })
-    const refreshToken = createRefreshToken({ id: user._id })
+    const accessToken = createAccessToken({ _id: user._id })
+    const refreshToken = createRefreshToken({ _id: user._id })
 
     res.status(200).json({
       success: 'Sucesso ao logar',

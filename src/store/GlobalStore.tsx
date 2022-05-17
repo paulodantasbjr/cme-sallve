@@ -1,6 +1,5 @@
 import { createContext, useEffect, useReducer } from 'react'
-import { toast } from 'react-toastify'
-import { getData } from '../services'
+import { GetToastHelper } from '../utils/ToastHelper'
 import { reducers } from './Reducer'
 import { DataProviderProps, GlobalContextProps } from './store.types'
 
@@ -17,21 +16,15 @@ export const DataProvider = ({ children }: DataProviderProps) => {
   const fetchUser = async () => {
     const firstLogin = window.localStorage.getItem('firstLogin')
     if (firstLogin) {
-      const result = await getData('auth/accessToken')
+      const result = await GetToastHelper('auth/accessToken')
 
-      if (result.success) {
-        dispatch({
-          type: 'AUTH',
-          payload: {
-            token: result.accessToken,
-            user: result.user,
-          },
-        })
-      }
-
-      if (result.error) {
-        toast.error(result.error)
-      }
+      dispatch({
+        type: 'AUTH',
+        payload: {
+          token: result.accessToken,
+          user: result.user,
+        },
+      })
     }
   }
 

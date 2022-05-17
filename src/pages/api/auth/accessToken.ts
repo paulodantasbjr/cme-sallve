@@ -28,17 +28,16 @@ export default async function handler(
           'Seu token esta incorreto ou expirado, por favor logue novamente!',
       })
 
-    const user = await User.findOne({ id: verifyUser._id })
+    const user = await User.findById({ _id: verifyUser._id })
 
     if (!user)
       return res
         .status(400)
         .json({ error: 'Usuario nao encontrado, por favor logue novamente' })
 
-    const accessToken = createAccessToken({ id: user._id })
+    const accessToken = createAccessToken({ _id: user._id })
 
     res.json({
-      success: 'Logado com sucesso',
       accessToken,
       user: {
         _id: user._id,
