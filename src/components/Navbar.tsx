@@ -49,7 +49,7 @@ export const Navbar = () => {
             alt={state.auth.user?.name}
           />
           {isMenuOpen && (
-            <div className="absolute right-0 top-8 z-50  rounded-md bg-white p-2 shadow-2xl">
+            <div className="absolute right-0 top-8 z-50 min-w-[6rem] rounded-md bg-white p-2 shadow-2xl">
               <div className="flex flex-col items-end gap-2">
                 <MdClose
                   onClick={handleMenu}

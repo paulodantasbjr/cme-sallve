@@ -1,6 +1,6 @@
 import { Id, toast } from 'react-toastify'
 
-import { deleteData, postData, putData } from '../services'
+import { deleteData, postData, putData, patchData } from '../services'
 
 const infoMsg = (id: Id, result: any) => {
   if (result.success) {
@@ -42,6 +42,13 @@ export const PostToastHelper = async (url: string, data: any) => {
 export const PutToastHelper = async (url: string, data: any) => {
   const id = toast.loading('Carregando...')
   const result = await putData(url, data)
+
+  infoMsg(id, result)
+}
+
+export const PatchToastHelper = async (url: string, data: any) => {
+  const id = toast.loading('Carregando...')
+  const result = await patchData(url, data)
 
   infoMsg(id, result)
 }

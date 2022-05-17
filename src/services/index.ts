@@ -41,7 +41,7 @@ export const putData = async (url: string, data: any, token: string = '') => {
   return result
 }
 
-export const patchData = async (url: string, data: any, token: string) => {
+export const patchData = async (url: string, data: any, token: string = '') => {
   const response = await fetch(`${baseUrl}/api/${url}`, {
     method: 'PATCH',
     headers: {

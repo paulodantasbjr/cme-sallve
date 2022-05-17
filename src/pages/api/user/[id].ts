@@ -1,8 +1,9 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 
+import { hash } from 'bcrypt'
+
 import { connectDB } from '../../../utils/DB'
 import { User } from '../../../../models/userModel'
-import { hash } from 'bcrypt'
 
 connectDB()
 
@@ -14,7 +15,7 @@ export default async function handler(
     case 'DELETE':
       await deleteUser(req, res)
       break
-    case 'PUT':
+    case 'PATCH':
       await updateUser(req, res)
       break
     default:
@@ -25,7 +26,6 @@ export default async function handler(
 const deleteUser = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const { id } = req.query
-    console.log('chegou')
     const user = await User.findByIdAndDelete(id)
     if (!user) return res.status(404).json({ error: 'Usuário nao encontrado' })
 
@@ -40,15 +40,13 @@ const deleteUser = async (req: NextApiRequest, res: NextApiResponse) => {
 const updateUser = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const { id } = req.query
-    const { name, password, role } = req.body
-
-    const passwordHash = await hash(password, 12)
+    const { email, name, role } = req.body
 
     const user = await User.findOneAndUpdate(
       { _id: id },
       {
+        email,
         name: name.toUpperCase(),
-        password: passwordHash,
         role: role.toUpperCase(),
       }
     )
