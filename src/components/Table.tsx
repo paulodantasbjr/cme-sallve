@@ -86,7 +86,7 @@ export const TableBodyEquipaments = ({
   handleEdit,
   handleDelete,
 }: TableBodyEquipamentProps) => {
-
+  return (
     <>
       {equipaments?.map((equipament) => (
         <tr
