@@ -35,7 +35,7 @@ const getEquipaments = async (res: NextApiResponse) => {
 
 const createEquipament = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    const { ns, type, model, brand, status, obs } = req.body
+    const { ns, type, model, brand, status, local, obs } = req.body
 
     const verifyNS = await Equipament.findOne({ ns })
     if (verifyNS) return res.status(400).json({ error: 'NS já cadastrada' })
@@ -46,6 +46,7 @@ const createEquipament = async (req: NextApiRequest, res: NextApiResponse) => {
       model: model.toUpperCase(),
       brand: brand.toUpperCase(),
       status: status.toUpperCase(),
+      local: local.toUpperCase(),
       obs,
     })
 

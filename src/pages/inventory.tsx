@@ -30,7 +30,9 @@ const Inventory: NextPage<InventoryProps> = ({
     { id: 3, name: 'modelo' },
     { id: 4, name: 'marca' },
     { id: 5, name: 'status' },
-    { id: 6, name: 'obs' },
+    { id: 6, name: 'local' },
+    { id: 7, name: 'obs' },
+    { id: 8, name: '' },
   ]
 
   const handleClose = () => {

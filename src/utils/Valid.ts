@@ -25,9 +25,10 @@ export const validEquipament = (
   type: string,
   brand: string,
   model: string,
-  status: string
+  status: string,
+  local: string
 ) => {
-  if (!ns || !type || !brand || !model || !status)
+  if (!ns || !type || !brand || !model || !status || !local)
     return 'Preencha todos os campos'
 
   if (ns.length < 3) return 'O número de série deve ter no mínimo 3 caracteres'

@@ -26,6 +26,10 @@ const equipamentSchema = new Schema<EquipamentProps>(
       type: String,
       required: true,
     },
+    local: {
+      type: String,
+      required: true,
+    },
     obs: {
       type: String,
       required: false,

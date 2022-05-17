@@ -22,6 +22,7 @@ export const ModalEquipament = ({ handleClose }: ModalEquipamentProps) => {
     model: state.equipaments.model ? state.equipaments.model : '',
     obs: state.equipaments.obs ? state.equipaments.obs : '',
     status: state.equipaments.status ? state.equipaments.status : '',
+    local: state.equipaments.local ? state.equipaments.local : '',
   } as EquipamentProps
   const [equipamentData, setEquipamentData] = useState(initialState)
 
@@ -44,7 +45,8 @@ export const ModalEquipament = ({ handleClose }: ModalEquipamentProps) => {
       equipamentData.type,
       equipamentData.brand,
       equipamentData.model,
-      equipamentData.status
+      equipamentData.status,
+      equipamentData.local
     )
     if (erroMsg) return toast.error(erroMsg)
 
@@ -66,7 +68,7 @@ export const ModalEquipament = ({ handleClose }: ModalEquipamentProps) => {
         className="flex w-96 flex-col gap-4 rounded-lg bg-neutral-100 p-4"
         onSubmit={handleSubmit}
       >
-        <h1 className="text-center text-2xl font-bold">
+        <h1 className="text-center text-2xl font-bold uppercase">
           {!state.equipaments._id ? 'Novo equipamento' : 'Editar equipamento'}
         </h1>
         <div className="flex gap-4">
@@ -116,23 +118,52 @@ export const ModalEquipament = ({ handleClose }: ModalEquipamentProps) => {
             </select>
           </div>
         </div>
-        <div className="w-full">
-          <label
-            className="text-xs font-bold uppercase tracking-wide text-gray-700"
-            htmlFor="model"
-          >
-            modelo
-          </label>
-          <input
-            className="w-full rounded border border-gray-200 bg-gray-50 p-2 leading-tight text-gray-700 focus:border-gray-500 focus:bg-white focus:outline-none"
-            id="model"
-            required
-            type="text"
-            name="model"
-            value={equipamentData.model}
-            onChange={handleChange}
-            placeholder="Samsung S10"
-          />
+        <div className="flex gap-4">
+          <div>
+            <label
+              className="text-xs font-bold uppercase tracking-wide text-gray-700"
+              htmlFor="model"
+            >
+              modelo
+            </label>
+            <input
+              className="w-full rounded border border-gray-200 bg-gray-50 p-2 leading-tight text-gray-700 focus:border-gray-500 focus:bg-white focus:outline-none"
+              id="model"
+              required
+              type="text"
+              name="model"
+              value={equipamentData.model}
+              onChange={handleChange}
+              placeholder="Samsung S10"
+            />
+          </div>
+          <div>
+            <label
+              className="text-xs font-bold uppercase tracking-wide text-gray-700"
+              htmlFor="local"
+            >
+              LOCAL
+            </label>
+            <select
+              className="w-full rounded border border-gray-200 bg-gray-50 p-2 leading-tight text-gray-700 focus:border-gray-500 focus:bg-white focus:outline-none"
+              id="local"
+              name="local"
+              required
+              value={equipamentData.local}
+              onChange={handleChange}
+            >
+              <option className="uppercase">Selecione</option>
+              <option className="uppercase" value="SALVE">
+                SALVE
+              </option>
+              <option className="uppercase" value="DEPOSITO">
+                DEPOSITO
+              </option>
+              <option className="uppercase" value="PESSOAL">
+                PESSOAL
+              </option>
+            </select>
+          </div>
         </div>
         <div className="flex gap-4">
           <div className="flex flex-1 flex-col">

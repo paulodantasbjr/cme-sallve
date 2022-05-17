@@ -86,7 +86,7 @@ export const TableBodyEquipaments = ({
   handleEdit,
   handleDelete,
 }: TableBodyEquipamentProps) => {
-  return (
+
     <>
       {equipaments?.map((equipament) => (
         <tr
@@ -98,6 +98,7 @@ export const TableBodyEquipaments = ({
           <td className="px-6 py-4">{equipament.model}</td>
           <td className="px-6 py-4">{equipament.brand}</td>
           <td className="px-6 py-4">{equipament.status}</td>
+          <td className="px-6 py-4">{equipament.local}</td>
           <td className="px-6 py-4">
             {equipament.obs ? equipament.obs : <span>---</span>}
           </td>

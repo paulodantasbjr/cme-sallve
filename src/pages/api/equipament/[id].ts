@@ -42,7 +42,7 @@ const getEquipament = async (req: NextApiRequest, res: NextApiResponse) => {
 const updateEquipament = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const { id } = req.query
-    const { ns, type, model, brand, status, obs } = req.body
+    const { ns, type, model, brand, status, local, obs } = req.body
 
     const equipament = await Equipament.findOneAndUpdate(
       { _id: id },
@@ -52,6 +52,7 @@ const updateEquipament = async (req: NextApiRequest, res: NextApiResponse) => {
         model: model.toUpperCase(),
         brand: brand.toUpperCase(),
         status: status.toUpperCase(),
+        local: local.toUpperCase(),
         obs,
       }
     )
