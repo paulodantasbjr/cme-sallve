@@ -153,8 +153,8 @@ export const ModalEquipament = ({ handleClose }: ModalEquipamentProps) => {
               onChange={handleChange}
             >
               <option className="uppercase">Selecione</option>
-              <option className="uppercase" value="SALVE">
-                SALVE
+              <option className="uppercase" value="SALLVE">
+                SALLVE
               </option>
               <option className="uppercase" value="DEPOSITO">
                 DEPOSITO
