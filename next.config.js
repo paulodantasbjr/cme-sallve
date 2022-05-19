@@ -5,8 +5,8 @@ module.exports = {
     domains: ['res.cloudinary.com'],
   },
   env: {
-    BASE_URL: 'http://localhost:3000',
-    // BASE_URL: 'https://cme-sallve.vercel.app/',
+    //BASE_URL: 'http://localhost:3000',
+    BASE_URL: 'https://cme-sallve.vercel.app/',
     MONGO_URL:
       'mongodb+srv://admin:admin@db-cme.9ioe3.mongodb.net/db-cme?retryWrites=true&w=majority',
     ACCESS_TOKEN_SECRET: 'token_secret',
