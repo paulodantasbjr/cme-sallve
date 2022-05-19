@@ -1,5 +1,6 @@
 export const ACTIONS = {
   AUTH: 'AUTH',
   INVENTORY: 'INVENTORY',
+  EQUIPAMENT: 'EQUIPAMENT',
   USER: 'USER',
 }

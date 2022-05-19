@@ -2,7 +2,7 @@ import { useContext, useState } from 'react'
 
 import type { GetServerSideProps, NextPage } from 'next'
 import Head from 'next/head'
-
+import { AiOutlinePlus } from 'react-icons/ai'
 import { InventoryProps } from '../types/Inventory'
 import { getData } from '../services'
 import { GlobalContext } from '../store/GlobalStore'
@@ -59,6 +59,26 @@ const Inventory: NextPage<IInventory> = ({ inventory, total }: IInventory) => {
         <title>CME - Inventário</title>
       </Head>
       <Layout>
+        <div className="mt-2 mr-2 flex justify-between">
+          {state.auth.user?.role === 'ADM' && (
+            <>
+              <button
+                type="button"
+                className="ml-4 flex items-center justify-center gap-1 rounded-lg bg-lime-300 p-2 text-sm font-normal uppercase text-black transition duration-75 hover:bg-lime-600 dark:text-white dark:hover:bg-gray-700 "
+              >
+                Extrair CSV
+              </button>
+              <button
+                type="reset"
+                onClick={() => setIsOpenEdit(true)}
+                className="ml-4 flex items-center justify-center gap-1 rounded-lg bg-fuchsia-400 p-2 text-sm font-normal uppercase text-white transition duration-75 hover:bg-fuchsia-600 dark:text-white dark:hover:bg-gray-700 "
+              >
+                <AiOutlinePlus className="text-white" />
+                Novo item
+              </button>
+            </>
+          )}
+        </div>
         {total > 0 ? (
           <div className="relative flex-grow overflow-x-auto p-4 shadow-md sm:rounded-lg">
             <table className="w-full text-left text-sm text-gray-500 dark:text-gray-400">

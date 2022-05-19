@@ -2,22 +2,14 @@ import { useContext, useState } from 'react'
 
 import Image from 'next/image'
 
-import { AiOutlinePlus } from 'react-icons/ai'
-
 import { GlobalContext } from '../store/GlobalStore'
-import { ModalInventory } from './ModalInventory'
 import Link from 'next/link'
 import { MdClose } from 'react-icons/md'
 
 export const Navbar = () => {
-  const [isModalInventoryOpen, setIsModalInventoryOpen] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   const { state } = useContext(GlobalContext)
-
-  const handleClick = () => {
-    setIsModalInventoryOpen(!isModalInventoryOpen)
-  }
 
   const handleMenu = () => {
     setIsMenuOpen(!isMenuOpen)
@@ -25,20 +17,7 @@ export const Navbar = () => {
 
   return (
     <>
-      <header
-        className={`flex h-16 items-center ${
-          state.auth.user?.role === 'ADM' ? 'justify-between' : 'justify-end'
-        }  bg-white shadow-lg`}
-      >
-        {state.auth.user?.role === 'ADM' && (
-          <button
-            onClick={handleClick}
-            className="ml-4 flex items-center justify-center gap-1 rounded-lg bg-fuchsia-400 p-2 text-sm font-normal uppercase text-white transition duration-75 hover:bg-fuchsia-600 dark:text-white dark:hover:bg-gray-700 "
-          >
-            <AiOutlinePlus className="text-white" />
-            Novo item
-          </button>
-        )}
+      <header className="flex h-16 items-center justify-end bg-white shadow-lg">
         <div className="relative mr-4 flex flex-row-reverse items-center gap-2">
           <Image
             onClick={handleMenu}
@@ -74,7 +53,6 @@ export const Navbar = () => {
           </div>
         </div>
       </header>
-      {isModalInventoryOpen && <ModalInventory handleClose={handleClick} />}
     </>
   )
 }

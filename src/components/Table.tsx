@@ -1,4 +1,5 @@
 import { MdDeleteForever, MdEdit } from 'react-icons/md'
+import { EquipamentProps } from '../types/Equipament'
 
 import { InventoryProps } from '../types/Inventory'
 import { UserProps } from '../types/User'
@@ -27,6 +28,13 @@ interface TableBodyInventoryProps {
   handleDelete: (inventory: InventoryProps) => void
 }
 
+interface TableBodyEquipamentProps {
+  equipament: EquipamentProps[]
+  role: string
+  handleEdit: (inventory: InventoryProps) => void
+  handleDelete: (inventory: InventoryProps) => void
+}
+
 export const TableHead = ({ th, role }: TableHeadProps) => {
   return (
     <tr>
@@ -35,6 +43,7 @@ export const TableHead = ({ th, role }: TableHeadProps) => {
           {thItem.name}
         </th>
       ))}
+      {role === 'ADM' && <th scope="col" className="px-6 py-3" />}
       {role === 'ADM' && <th scope="col" className="px-6 py-3" />}
     </tr>
   )
@@ -114,6 +123,51 @@ export const TableBodyInventory = ({
               <td className="px-6 py-4">
                 <MdDeleteForever
                   onClick={() => handleDelete(inventories)}
+                  className="h-5 w-5 cursor-pointer text-rose-500 hover:text-rose-800"
+                />
+              </td>
+            </>
+          )}
+        </tr>
+      ))}
+    </>
+  )
+}
+
+export const TableBodyEquipament = ({
+  role,
+  handleEdit,
+  handleDelete,
+  equipament,
+}: TableBodyEquipamentProps) => {
+  return (
+    <>
+      {equipament?.map((equipaments) => (
+        <tr
+          key={equipaments.ns}
+          className="border-b bg-white hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-600"
+        >
+          <td className="px-6 py-4">{equipaments.ns}</td>
+          <td className="px-6 py-4">{equipaments.type}</td>
+          <td className="px-6 py-4">{equipaments.model}</td>
+          <td className="px-6 py-4">{equipaments.brand}</td>
+          <td className="px-6 py-4">{equipaments.status}</td>
+          <td className="px-6 py-4">{equipaments.local}</td>
+          <td className="px-6 py-4">
+            {equipaments.obs ? equipaments.obs : <span>---</span>}
+          </td>
+          {role === 'ADM' && (
+            <>
+              <td className="px-6 py-4">
+                <MdEdit
+                  onClick={() => handleEdit(equipaments)}
+                  className="h-5 w-5 cursor-pointer  text-neutral-500 hover:text-neutral-800"
+                />
+              </td>
+
+              <td className="px-6 py-4">
+                <MdDeleteForever
+                  onClick={() => handleDelete(equipaments)}
                   className="h-5 w-5 cursor-pointer text-rose-500 hover:text-rose-800"
                 />
               </td>

@@ -9,6 +9,7 @@ export const DataProvider = ({ children }: DataProviderProps) => {
   const initialState = {
     auth: {},
     inventory: {},
+    equipament: {},
     users: {},
   }
   const [state, dispatch] = useReducer(reducers, initialState)

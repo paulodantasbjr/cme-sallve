@@ -18,6 +18,11 @@ export const reducers = (state: State, action: Action) => {
         ...state,
         users: action.payload,
       }
+    case ACTIONS.EQUIPAMENT:
+      return {
+        ...state,
+        equipament: action.payload,
+      }
     default:
       return state
   }

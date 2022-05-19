@@ -26,7 +26,6 @@ const User: NextPage<UserTypes> = ({ total, users }: UserTypes) => {
     { id: 2, name: 'email' },
     { id: 3, name: 'nome' },
     { id: 4, name: 'cargo' },
-    { id: 5, name: '' },
   ]
 
   const handleClose = () => {
