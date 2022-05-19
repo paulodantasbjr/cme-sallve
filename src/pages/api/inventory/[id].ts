@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 
-import { Equipament } from '../../../../models/equipamentModel'
+import { Inventory } from '../../../../models/inventoryModel'
 import { connectDB } from '../../../utils/DB'
 
 connectDB()
@@ -11,40 +11,40 @@ export default async function handler(
 ) {
   switch (req.method) {
     case 'GET':
-      await getEquipament(req, res)
+      await getInventory(req, res)
       break
     case 'PUT':
-      await updateEquipament(req, res)
+      await updateInventory(req, res)
       break
     case 'DELETE':
-      await deleteEquipament(req, res)
+      await deleteInventory(req, res)
       break
     default:
       break
   }
 }
 
-const getEquipament = async (req: NextApiRequest, res: NextApiResponse) => {
+const getInventory = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const { id } = req.query
-    const equipament = await Equipament.findById(id)
-    if (!equipament)
-      return res.status(404).json({ error: 'Equipamento nao encontrado' })
+    const inventory = await Inventory.findById(id)
+    if (!inventory)
+      return res.status(404).json({ error: 'item nao encontrado' })
 
     res.status(200).json({
-      equipament,
+      inventory,
     })
   } catch (error: any) {
     res.status(500).json({ error: error.message })
   }
 }
 
-const updateEquipament = async (req: NextApiRequest, res: NextApiResponse) => {
+const updateInventory = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const { id } = req.query
     const { ns, type, model, brand, status, local, obs } = req.body
 
-    const equipament = await Equipament.findOneAndUpdate(
+    const inventario = await Inventory.findOneAndUpdate(
       { _id: id },
       {
         ns: ns.toUpperCase(),
@@ -56,24 +56,24 @@ const updateEquipament = async (req: NextApiRequest, res: NextApiResponse) => {
         obs,
       }
     )
-    if (!equipament)
-      return res.status(404).json({ error: 'Equipamento nao encontrado' })
+    if (!inventario)
+      return res.status(404).json({ error: 'Item nao encontrado' })
 
-    res.json({ success: 'Equipamento editado com sucesso' })
+    res.json({ success: 'Item editado com sucesso' })
   } catch (error: any) {
     res.status(500).json({ error: error.message })
   }
 }
 
-const deleteEquipament = async (req: NextApiRequest, res: NextApiResponse) => {
+const deleteInventory = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const { id } = req.query
-    const equipament = await Equipament.findByIdAndDelete(id)
-    if (!equipament)
-      return res.status(404).json({ error: 'Equipamento nao encontrado' })
+    const inventory = await Inventory.findByIdAndDelete(id)
+    if (!inventory)
+      return res.status(404).json({ error: 'Item nao encontrado' })
 
     res.status(200).json({
-      success: 'Equipamento deletado com sucesso',
+      success: 'Item deletado com sucesso',
     })
   } catch (error: any) {
     res.status(500).json({ error: error.message })

@@ -3,23 +3,20 @@ import { useContext, useState } from 'react'
 import type { GetServerSideProps, NextPage } from 'next'
 import Head from 'next/head'
 
-import { EquipamentProps } from '../types/Equipament'
+import { InventoryProps } from '../types/Inventory'
 import { getData } from '../services'
 import { GlobalContext } from '../store/GlobalStore'
 import { Layout } from '../components/Layout'
 import { ModalDelete } from '../components/ModalDelete'
-import { ModalEquipament } from '../components/ModalEquipament'
-import { TableBodyEquipaments, TableHead } from '../components/Table'
+import { ModalInventory } from '../components/ModalInventory'
+import { TableBodyInventory, TableHead } from '../components/Table'
 
-interface InventoryProps {
-  equipaments: EquipamentProps[]
+interface IInventory {
+  inventory: InventoryProps[]
   total: number
 }
 
-const Inventory: NextPage<InventoryProps> = ({
-  equipaments,
-  total,
-}: InventoryProps) => {
+const Inventory: NextPage<IInventory> = ({ inventory, total }: IInventory) => {
   const [isOpen, setIsOpen] = useState(false)
   const [isOpenEdit, setIsOpenEdit] = useState(false)
   const { state, dispatch } = useContext(GlobalContext)
@@ -35,23 +32,23 @@ const Inventory: NextPage<InventoryProps> = ({
   ]
 
   const handleClose = () => {
-    dispatch({ type: 'EQUIPAMENT', payload: {} })
+    dispatch({ type: 'INVENTORY', payload: {} })
     setIsOpen(false)
     setIsOpenEdit(false)
   }
 
-  const handleEdit = (equipament: EquipamentProps) => {
+  const handleEdit = (inventory: InventoryProps) => {
     dispatch({
-      type: 'EQUIPAMENT',
-      payload: equipament,
+      type: 'INVENTORY',
+      payload: inventory,
     })
     setIsOpenEdit(!isOpen)
   }
 
-  const handleDelete = (equipament: EquipamentProps) => {
+  const handleDelete = (inventory: InventoryProps) => {
     dispatch({
-      type: 'EQUIPAMENT',
-      payload: equipament,
+      type: 'INVENTORY',
+      payload: inventory,
     })
     setIsOpen(!isOpen)
   }
@@ -69,9 +66,9 @@ const Inventory: NextPage<InventoryProps> = ({
                 <TableHead th={th} role={state.auth.user?.role} />
               </thead>
               <tbody>
-                <TableBodyEquipaments
+                <TableBodyInventory
                   role={state.auth.user?.role}
-                  equipaments={equipaments}
+                  inventory={inventory}
                   handleEdit={handleEdit}
                   handleDelete={handleDelete}
                 />
@@ -80,28 +77,28 @@ const Inventory: NextPage<InventoryProps> = ({
           </div>
         ) : (
           <div className="flex flex-grow items-center justify-center">
-            <h1 className="text-4xl">Não há equipamentos cadastrados</h1>
+            <h1 className="text-4xl">Não há items cadastrados</h1>
           </div>
         )}
       </Layout>
       {isOpen && (
         <ModalDelete
           callback="/inventory"
-          url={`equipament/${state.equipaments._id}`}
-          title="Você tem certeza que deseja excluir esse equipamento?"
+          url={`inventory/${state.inventory._id}`}
+          title="Você tem certeza que deseja excluir esse item?"
           handleClose={handleClose}
         />
       )}
-      {isOpenEdit && <ModalEquipament handleClose={handleClose} />}
+      {isOpenEdit && <ModalInventory handleClose={handleClose} />}
     </>
   )
 }
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const res = await getData('/equipament')
+  const res = await getData('/inventory')
   return {
     props: {
-      equipaments: res.equipaments,
+      inventory: res.inventory,
       total: res.total,
     },
   }

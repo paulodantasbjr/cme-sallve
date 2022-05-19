@@ -3,28 +3,28 @@ import { useContext, useState } from 'react'
 import { useRouter } from 'next/router'
 import { toast } from 'react-toastify'
 
-import { EquipamentProps } from '../types/Equipament'
+import { InventoryProps } from '../types/Inventory'
 import { GlobalContext } from '../store/GlobalStore'
 import { PostToastHelper, PutToastHelper } from '../utils/ToastHelper'
-import { validEquipament } from '../utils/Valid'
+import { validInventory } from '../utils/Valid'
 
-interface ModalEquipamentProps {
+interface ModalInventoryProps {
   handleClose: () => void
 }
 
-export const ModalEquipament = ({ handleClose }: ModalEquipamentProps) => {
+export const ModalInventory = ({ handleClose }: ModalInventoryProps) => {
   const { state } = useContext(GlobalContext)
 
   const initialState = {
-    ns: state.equipaments.ns ? state.equipaments.ns : '',
-    type: state.equipaments.type ? state.equipaments.type : '',
-    brand: state.equipaments.brand ? state.equipaments.brand : '',
-    model: state.equipaments.model ? state.equipaments.model : '',
-    obs: state.equipaments.obs ? state.equipaments.obs : '',
-    status: state.equipaments.status ? state.equipaments.status : '',
-    local: state.equipaments.local ? state.equipaments.local : '',
-  } as EquipamentProps
-  const [equipamentData, setEquipamentData] = useState(initialState)
+    ns: state.inventory.ns ? state.inventory.ns : '',
+    type: state.inventory.type ? state.inventory.type : '',
+    brand: state.inventory.brand ? state.inventory.brand : '',
+    model: state.inventory.model ? state.inventory.model : '',
+    obs: state.inventory.obs ? state.inventory.obs : '',
+    status: state.inventory.status ? state.inventory.status : '',
+    local: state.inventory.local ? state.inventory.local : '',
+  } as InventoryProps
+  const [inventoryData, setInventoryData] = useState(initialState)
 
   const router = useRouter()
 
@@ -34,29 +34,26 @@ export const ModalEquipament = ({ handleClose }: ModalEquipamentProps) => {
     >
   ) => {
     const { name, value } = e.target
-    setEquipamentData({ ...equipamentData, [name]: value })
+    setInventoryData({ ...inventoryData, [name]: value })
   }
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    const erroMsg = validEquipament(
-      equipamentData.ns,
-      equipamentData.type,
-      equipamentData.brand,
-      equipamentData.model,
-      equipamentData.status,
-      equipamentData.local
+    const erroMsg = validInventory(
+      inventoryData.ns,
+      inventoryData.type,
+      inventoryData.brand,
+      inventoryData.model,
+      inventoryData.status,
+      inventoryData.local
     )
     if (erroMsg) return toast.error(erroMsg)
 
-    if (!state.equipaments._id) {
-      await PostToastHelper('equipament', equipamentData)
+    if (!state.inventory._id) {
+      await PostToastHelper('inventory', inventoryData)
     } else {
-      await PutToastHelper(
-        `equipament/${state.equipaments._id}`,
-        equipamentData
-      )
+      await PutToastHelper(`inventory/${state.inventory._id}`, inventoryData)
     }
     router.push('/inventory')
     handleClose()
@@ -69,7 +66,7 @@ export const ModalEquipament = ({ handleClose }: ModalEquipamentProps) => {
         onSubmit={handleSubmit}
       >
         <h1 className="text-center text-2xl font-bold uppercase">
-          {!state.equipaments._id ? 'Novo equipamento' : 'Editar equipamento'}
+          {!state.inventory._id ? 'Novo item' : 'Editar inventario'}
         </h1>
         <div className="flex gap-4">
           <div className="flex flex-1 flex-col">
@@ -85,7 +82,7 @@ export const ModalEquipament = ({ handleClose }: ModalEquipamentProps) => {
               type="text"
               required
               name="ns"
-              value={equipamentData.ns}
+              value={inventoryData.ns}
               onChange={handleChange}
               placeholder="90210"
             />
@@ -100,7 +97,7 @@ export const ModalEquipament = ({ handleClose }: ModalEquipamentProps) => {
             <select
               required
               name="type"
-              value={equipamentData.type}
+              value={inventoryData.type}
               onChange={handleChange}
               className="w-full rounded border border-gray-200 bg-gray-50 p-2 leading-tight text-gray-700 focus:border-gray-500 focus:bg-white focus:outline-none"
               id="type"
@@ -132,7 +129,7 @@ export const ModalEquipament = ({ handleClose }: ModalEquipamentProps) => {
               required
               type="text"
               name="model"
-              value={equipamentData.model}
+              value={inventoryData.model}
               onChange={handleChange}
               placeholder="Samsung S10"
             />
@@ -149,7 +146,7 @@ export const ModalEquipament = ({ handleClose }: ModalEquipamentProps) => {
               id="local"
               name="local"
               required
-              value={equipamentData.local}
+              value={inventoryData.local}
               onChange={handleChange}
             >
               <option className="uppercase">Selecione</option>
@@ -178,7 +175,7 @@ export const ModalEquipament = ({ handleClose }: ModalEquipamentProps) => {
               id="brand"
               name="brand"
               required
-              value={equipamentData.brand}
+              value={inventoryData.brand}
               onChange={handleChange}
             >
               <option className="uppercase">Selecione</option>
@@ -211,7 +208,7 @@ export const ModalEquipament = ({ handleClose }: ModalEquipamentProps) => {
               id="status"
               name="status"
               required
-              value={equipamentData.status}
+              value={inventoryData.status}
               onChange={handleChange}
             >
               <option className="uppercase">Selecione</option>
@@ -238,7 +235,7 @@ export const ModalEquipament = ({ handleClose }: ModalEquipamentProps) => {
             id="message"
             rows={4}
             name="obs"
-            value={equipamentData.obs}
+            value={inventoryData.obs}
             onChange={handleChange}
             className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-sm text-gray-900 focus:border-fuchsia-500 focus:ring-fuchsia-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-fuchsia-500 dark:focus:ring-fuchsia-600"
             placeholder="Monitor lg com problemas de visão"
@@ -252,7 +249,7 @@ export const ModalEquipament = ({ handleClose }: ModalEquipamentProps) => {
           >
             cancelar
           </button>
-          {state.equipaments.ns ? (
+          {state.inventory.ns ? (
             <button
               type="submit"
               className="rounded-lg bg-fuchsia-400 px-5 py-1.5 text-center text-sm font-medium uppercase text-white hover:bg-fuchsia-800 focus:outline-none focus:ring-4 focus:ring-fuchsia-400 dark:bg-fuchsia-400 dark:hover:bg-fuchsia-400 dark:focus:ring-fuchsia-400"

@@ -1,4 +1,4 @@
-export interface EquipamentProps {
+export interface InventoryProps {
   _id: string
   ns: string
   type: string

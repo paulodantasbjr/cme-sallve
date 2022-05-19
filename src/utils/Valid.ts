@@ -20,7 +20,7 @@ export const validUser = (
   if (password !== passwordConfirm) return 'As senhas não conferem'
 }
 
-export const validEquipament = (
+export const validInventory = (
   ns: string,
   type: string,
   brand: string,

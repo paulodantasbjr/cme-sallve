@@ -4,7 +4,13 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
-import { HiChartPie, HiLogout, HiUser, HiClipboardList } from 'react-icons/hi'
+import {
+  HiChartPie,
+  HiLogout,
+  HiUser,
+  HiClipboardList,
+  HiDesktopComputer,
+} from 'react-icons/hi'
 
 import { GlobalContext } from '../store/GlobalStore'
 import { onLogout } from '../utils/onLogout'
@@ -60,6 +66,18 @@ export const Sidebar = () => {
               >
                 <HiClipboardList className="h-6 w-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" />
                 <span className="ml-3">Inventário</span>
+              </a>
+            </Link>
+          </li>
+          <li>
+            <Link href="/equipament">
+              <a
+                className={`${isActive(
+                  '/equipament'
+                )} flex items-center rounded-lg p-2 text-base font-normal text-gray-900 hover:bg-lime-100 dark:text-white dark:hover:bg-gray-700`}
+              >
+                <HiDesktopComputer className="h-6 w-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" />
+                <span className="ml-3">Equipamento</span>
               </a>
             </Link>
           </li>

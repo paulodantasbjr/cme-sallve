@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 
 import { connectDB } from '../../../utils/DB'
-import { Equipament } from '../../../../models/equipamentModel'
+import { Inventory } from '../../../../models/inventoryModel'
 
 connectDB()
 
@@ -11,36 +11,36 @@ export default async function handler(
 ) {
   switch (req.method) {
     case 'GET':
-      await getEquipaments(res)
+      await getInventory(res)
       break
     case 'POST':
-      await createEquipament(req, res)
+      await createInventory(req, res)
       break
     default:
       break
   }
 }
 
-const getEquipaments = async (res: NextApiResponse) => {
+const getInventory = async (res: NextApiResponse) => {
   try {
-    const equipaments = await Equipament.find().sort({ updatedAt: -1 })
+    const inventory = await Inventory.find().sort({ updatedAt: -1 })
     res.status(200).json({
-      total: equipaments.length,
-      equipaments,
+      total: inventory.length,
+      inventory,
     })
   } catch (error: any) {
     res.status(500).json({ error: error.message })
   }
 }
 
-const createEquipament = async (req: NextApiRequest, res: NextApiResponse) => {
+const createInventory = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const { ns, type, model, brand, status, local, obs } = req.body
 
-    const verifyNS = await Equipament.findOne({ ns })
+    const verifyNS = await Inventory.findOne({ ns })
     if (verifyNS) return res.status(400).json({ error: 'NS já cadastrada' })
 
-    const newEquipament = new Equipament({
+    const newInventory = new Inventory({
       ns: ns.toUpperCase(),
       type: type.toUpperCase(),
       model: model.toUpperCase(),
@@ -50,9 +50,9 @@ const createEquipament = async (req: NextApiRequest, res: NextApiResponse) => {
       obs,
     })
 
-    await newEquipament.save()
+    await newInventory.save()
 
-    res.json({ success: 'Novo equipamento criado' })
+    res.json({ success: 'Novo item criado' })
   } catch (error: any) {
     res.status(500).json({ error: error.message })
   }

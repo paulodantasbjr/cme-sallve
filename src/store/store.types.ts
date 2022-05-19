@@ -1,7 +1,7 @@
 import { Dispatch, ReactNode } from 'react'
 import { AuthProps } from '../types/Auth'
 
-import { EquipamentProps } from '../types/Equipament'
+import { InventoryProps } from '../types/Inventory'
 import { UserProps } from '../types/User'
 
 export interface Action {
@@ -11,13 +11,13 @@ export interface Action {
 
 export interface State {
   auth: AuthProps | any
-  equipaments: EquipamentProps | any
+  inventory: InventoryProps | any
   users: UserProps | any
 }
 
 export interface GlobalStateProps {
   auth: AuthProps
-  equipaments: EquipamentProps
+  inventory: InventoryProps
   users: UserProps
 }
 

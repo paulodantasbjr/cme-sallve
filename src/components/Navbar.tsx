@@ -5,18 +5,18 @@ import Image from 'next/image'
 import { AiOutlinePlus } from 'react-icons/ai'
 
 import { GlobalContext } from '../store/GlobalStore'
-import { ModalEquipament } from './ModalEquipament'
+import { ModalInventory } from './ModalInventory'
 import Link from 'next/link'
 import { MdClose } from 'react-icons/md'
 
 export const Navbar = () => {
-  const [isModalEquipamentOpen, setIsModalEquipamentOpen] = useState(false)
+  const [isModalInventoryOpen, setIsModalInventoryOpen] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   const { state } = useContext(GlobalContext)
 
   const handleClick = () => {
-    setIsModalEquipamentOpen(!isModalEquipamentOpen)
+    setIsModalInventoryOpen(!isModalInventoryOpen)
   }
 
   const handleMenu = () => {
@@ -36,7 +36,7 @@ export const Navbar = () => {
             className="ml-4 flex items-center justify-center gap-1 rounded-lg bg-fuchsia-400 p-2 text-sm font-normal uppercase text-white transition duration-75 hover:bg-fuchsia-600 dark:text-white dark:hover:bg-gray-700 "
           >
             <AiOutlinePlus className="text-white" />
-            Novo equipamento
+            Novo item
           </button>
         )}
         <div className="relative mr-4 flex flex-row-reverse items-center gap-2">
@@ -74,7 +74,7 @@ export const Navbar = () => {
           </div>
         </div>
       </header>
-      {isModalEquipamentOpen && <ModalEquipament handleClose={handleClick} />}
+      {isModalInventoryOpen && <ModalInventory handleClose={handleClick} />}
     </>
   )
 }

@@ -1,6 +1,6 @@
 import { MdDeleteForever, MdEdit } from 'react-icons/md'
 
-import { EquipamentProps } from '../types/Equipament'
+import { InventoryProps } from '../types/Inventory'
 import { UserProps } from '../types/User'
 
 interface Th {
@@ -20,11 +20,11 @@ interface TableBodyUsersProps {
   handleDelete: (user: UserProps) => void
 }
 
-interface TableBodyEquipamentProps {
-  equipaments: EquipamentProps[]
+interface TableBodyInventoryProps {
+  inventory: InventoryProps[]
   role: string
-  handleEdit: (equipament: EquipamentProps) => void
-  handleDelete: (equipament: EquipamentProps) => void
+  handleEdit: (inventory: InventoryProps) => void
+  handleDelete: (inventory: InventoryProps) => void
 }
 
 export const TableHead = ({ th, role }: TableHeadProps) => {
@@ -80,40 +80,40 @@ export const TableBodyUser = ({
   )
 }
 
-export const TableBodyEquipaments = ({
-  equipaments,
+export const TableBodyInventory = ({
+  inventory,
   role,
   handleEdit,
   handleDelete,
-}: TableBodyEquipamentProps) => {
+}: TableBodyInventoryProps) => {
   return (
     <>
-      {equipaments?.map((equipament) => (
+      {inventory?.map((inventories) => (
         <tr
-          key={equipament.ns}
+          key={inventories.ns}
           className="border-b bg-white hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-600"
         >
-          <td className="px-6 py-4">{equipament.ns}</td>
-          <td className="px-6 py-4">{equipament.type}</td>
-          <td className="px-6 py-4">{equipament.model}</td>
-          <td className="px-6 py-4">{equipament.brand}</td>
-          <td className="px-6 py-4">{equipament.status}</td>
-          <td className="px-6 py-4">{equipament.local}</td>
+          <td className="px-6 py-4">{inventories.ns}</td>
+          <td className="px-6 py-4">{inventories.type}</td>
+          <td className="px-6 py-4">{inventories.model}</td>
+          <td className="px-6 py-4">{inventories.brand}</td>
+          <td className="px-6 py-4">{inventories.status}</td>
+          <td className="px-6 py-4">{inventories.local}</td>
           <td className="px-6 py-4">
-            {equipament.obs ? equipament.obs : <span>---</span>}
+            {inventories.obs ? inventories.obs : <span>---</span>}
           </td>
           {role === 'ADM' && (
             <>
               <td className="px-6 py-4">
                 <MdEdit
-                  onClick={() => handleEdit(equipament)}
+                  onClick={() => handleEdit(inventories)}
                   className="h-5 w-5 cursor-pointer  text-neutral-500 hover:text-neutral-800"
                 />
               </td>
 
               <td className="px-6 py-4">
                 <MdDeleteForever
-                  onClick={() => handleDelete(equipament)}
+                  onClick={() => handleDelete(inventories)}
                   className="h-5 w-5 cursor-pointer text-rose-500 hover:text-rose-800"
                 />
               </td>
